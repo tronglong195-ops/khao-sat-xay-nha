@@ -2,6 +2,7 @@
 
 > **Nền tảng khảo sát nhu cầu xây nhà chuyên nghiệp, tự động tính phong thủy Bát Trạch, dự toán chi phí sơ bộ, gợi ý phối cảnh 3D công trình thực tế tại Việt Nam, xuất hồ sơ Word (.docx) và quản lý khách hàng (CRM).**
 
+[![Firebase Hosting](https://img.shields.io/badge/Firebase%20Hosting-khao--sat--xay--nha.web.app-039be5.svg?logo=firebase)](https://khao-sat-xay-nha.web.app)
 [![Deploy to GitHub Pages](https://github.com/tronglong195-ops/khao-sat-xay-nha/actions/workflows/deploy.yml/badge.svg)](https://github.com/tronglong195-ops/khao-sat-xay-nha/actions/workflows/deploy.yml)
 [![Tests](https://img.shields.io/badge/Unit%20Tests-83%20passed-brightgreen.svg)](https://github.com/tronglong195-ops/khao-sat-xay-nha)
 [![React](https://img.shields.io/badge/React-18.3-blue.svg)](https://react.dev/)
@@ -11,12 +12,23 @@
 
 ---
 
-## 🌐 LINK TRUY CẬP ONLINE
+## 🌐 DANH SÁCH TÊN MIỀN TRUY CẬP TRỰC TUYẾN
 
-| Phân hệ | Đường dẫn Firebase Hosting (Chính thức) | Đường dẫn GitHub Pages (Dự phòng) | Mô tả |
+Trang web hiện được triển khai đồng thời trên **Google Firebase Hosting** (hệ thống chính thức, tối ưu tốc độ & bảo mật) và **GitHub Pages** (hệ thống dự phòng):
+
+### 1. Hệ thống chính thức — Google Firebase Hosting (Khuyên dùng)
+> *Tối ưu tốc độ tải trang CDN toàn cầu của Google, chứng chỉ SSL bảo mật cao và đăng nhập Google OAuth mượt mà không lo bị chặn domain.*
+
+| Phân hệ | Đường dẫn truy cập (Tên miền chính) | Đường dẫn phụ (Mirror) | Mô tả |
 | :--- | :--- | :--- | :--- |
-| 📋 **Khảo sát khách hàng** | **[https://khao-sat-xay-nha.web.app/](https://khao-sat-xay-nha.web.app/)** | [https://tronglong195-ops.github.io/khao-sat-xay-nha/](https://tronglong195-ops.github.io/khao-sat-xay-nha/) | Giao diện 7 bước dành cho gia chủ điền thông tin |
-| 🔐 **Quản trị CRM Kỹ sư** | **[https://khao-sat-xay-nha.web.app/#/admin](https://khao-sat-xay-nha.web.app/#/admin)** | [https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin](https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin) | Quản lý hồ sơ, lọc trạng thái, ghi chú & tải Word |
+| 📋 **Khảo sát khách hàng** | 👉 **[https://khao-sat-xay-nha.web.app/](https://khao-sat-xay-nha.web.app/)** | [https://khao-sat-xay-nha.firebaseapp.com/](https://khao-sat-xay-nha.firebaseapp.com/) | Giao diện 7 bước dành cho gia chủ điền thông tin khảo sát |
+| 🔐 **Quản trị CRM Kỹ sư** | 👉 **[https://khao-sat-xay-nha.web.app/#/admin](https://khao-sat-xay-nha.web.app/#/admin)** | [https://khao-sat-xay-nha.firebaseapp.com/#/admin](https://khao-sat-xay-nha.firebaseapp.com/#/admin) | Đăng nhập Google Admin, lọc trạng thái hồ sơ, ghi chú & tải Word |
+
+### 2. Hệ thống dự phòng — GitHub Pages
+| Phân hệ | Đường dẫn truy cập | Mô tả |
+| :--- | :--- | :--- |
+| 📋 **Khảo sát khách hàng** | [https://tronglong195-ops.github.io/khao-sat-xay-nha/](https://tronglong195-ops.github.io/khao-sat-xay-nha/) | Giao diện khảo sát chạy trực tiếp từ mã nguồn GitHub |
+| 🔐 **Quản trị CRM Kỹ sư** | [https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin](https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin) | Quản trị viên trên GitHub Pages |
 
 ---
 
@@ -82,7 +94,7 @@ npm install
 ```bash
 npm run dev
 ```
-Truy cập tại: `http://localhost:5173/khao-sat-xay-nha/`
+Truy cập tại: `http://localhost:5173/`
 
 ### 3. Kiểm thử tự động (Testing & Linting)
 ```bash
@@ -91,11 +103,34 @@ npm run lint         # Kiểm tra chuẩn cú pháp ESLint
 npm run test:e2e     # Kiểm thử luồng End-to-End (Playwright)
 ```
 
-### 4. Biên dịch đóng gói sản phẩm (Production Build)
+---
+
+## 🚀 HƯỚNG DẪN TRIỂN KHAI (DEPLOYMENT)
+
+### Cách 1: Deploy lên Firebase Hosting (Khuyên dùng)
+Dự án đã có cấu hình `.firebaserc` trỏ sẵn về project `khao-sat-xay-nha`. Bạn chỉ cần mở Terminal và chạy:
+
 ```bash
-npm run build
+# 1. Đăng nhập Firebase (nếu máy chưa đăng nhập)
+npx firebase login
+
+# 2. Build và deploy trực tiếp lên Firebase Hosting
+npm run deploy:hosting
 ```
-Mã nguồn sau khi biên dịch nằm trong thư mục `dist/`.
+Ngay sau khi lệnh hoàn tất (khoảng 30 giây), bản cập nhật sẽ hoạt động ngay lập tức tại:
+👉 **https://khao-sat-xay-nha.web.app**
+
+### Cách 2: Deploy lên GitHub Pages
+Dự án được cấu hình sẵn **GitHub Actions CI/CD** tự động:
+Mỗi khi bạn thực hiện `git push origin main`, GitHub sẽ tự động build và cập nhật trang web tại:
+👉 **https://tronglong195-ops.github.io/khao-sat-xay-nha/**
+
+### Cách 3: Gắn tên miền riêng của bạn (Custom Domain)
+Nếu bạn có tên miền riêng (ví dụ: `dsdesign.vn` hoặc `khaosat.dsdesign.vn`):
+1. Vào **[Firebase Console](https://console.firebase.google.com/)** ➔ Chọn project `khao-sat-xay-nha`.
+2. Vào mục **Build** ➔ **Hosting** ➔ Nhấn **Add custom domain**.
+3. Nhập tên miền và làm theo bảng chỉ dẫn để trỏ bản ghi DNS (`CNAME` hoặc `A`) tại nơi quản lý tên miền.
+4. Firebase sẽ tự động cấp chứng chỉ bảo mật HTTPS (SSL) miễn phí trong vòng 15–45 phút.
 
 ---
 
@@ -103,6 +138,8 @@ Mã nguồn sau khi biên dịch nằm trong thư mục `dist/`.
 
 | Tệp tin cấu hình | Mục đích |
 | :--- | :--- |
+| `firebase.json` | Cấu hình Firebase Hosting, Firestore Rules, Index và Emulators |
+| `.firebaserc` | Chỉ định dự án Firebase mặc định (`khao-sat-xay-nha`) |
 | `src/config/company.ts` | Tên công ty, thương hiệu, hotline, hotline hiển thị, Zalo, địa chỉ |
 | `src/config/pricing.ts` | Đơn giá xây thô, hoàn thiện cơ bản, hoàn thiện cao cấp (triệu/m²) |
 | `src/domain/fengshui.ts` | Bát trạch, ngũ hành, can chi, tam tai, hoang ốc, kim lâu |
@@ -114,23 +151,9 @@ Mã nguồn sau khi biên dịch nằm trong thư mục `dist/`.
 
 ---
 
-## 🚀 QUY TRÌNH DEPLOY LÊN GITHUB PAGES
-
-Dự án được cấu hình sẵn **GitHub Actions CI/CD** tự động hóa hoàn toàn:
-1. Mỗi khi có lệnh `git push origin main`, workflow `.github/workflows/deploy.yml` sẽ tự động:
-   - Cài đặt dependencies (`npm ci`).
-   - Kiểm tra linter (`npm run lint`).
-   - Chạy 83 unit test (`npm test -- --run`).
-   - Biên dịch dự án (`npm run build`).
-   - Đẩy thư mục `dist/` sang nhánh `gh-pages`.
-2. Trang web sẽ tự động cập nhật online tại:  
-   👉 **[https://tronglong195-ops.github.io/khao-sat-xay-nha/](https://tronglong195-ops.github.io/khao-sat-xay-nha/)**
-
----
-
 ## 👨‍💻 BẢN QUYỀN & THÔNG TIN LIÊN HỆ
 
-- **Đơn vị phát triển**: DS DESIGN
+- **Đơn vị phát triển**: DS DESIGN — Thiết kế & Thi công nhà phố, biệt thự trọn gói
 - **Hotline / Zalo**: `0900 000 000`
 - **Địa chỉ**: Hà Nội, Việt Nam
-- **Website**: [https://tronglong195-ops.github.io/khao-sat-xay-nha/](https://tronglong195-ops.github.io/khao-sat-xay-nha/)
+- **Website chính thức**: [https://khao-sat-xay-nha.web.app/](https://khao-sat-xay-nha.web.app/)
