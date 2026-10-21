@@ -21,7 +21,7 @@ describe('Building Perspectives Domain', () => {
         expect(s.angle.length).toBeGreaterThan(2);
         expect(s.title.length).toBeGreaterThan(5);
         expect(s.desc.length).toBeGreaterThan(10);
-        expect(s.imageUrl).toMatch(/^https:\/\//);
+        expect(s.imageUrl.length).toBeGreaterThan(5);
         expect(s.tag.length).toBeGreaterThan(2);
       });
     });

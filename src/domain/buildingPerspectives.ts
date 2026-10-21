@@ -1,3 +1,5 @@
+import { assetUrl } from './format';
+
 export interface PerspectiveSlide {
   id: string;
   angle: string;
@@ -17,296 +19,264 @@ export interface BuildingTypePerspectives {
 export const BUILDING_PERSPECTIVES: Record<string, BuildingTypePerspectives> = {
   'Nhà phố': {
     typeName: 'Nhà phố',
-    summary: 'Kiến trúc nhà phố hiện đại, hình khối vuông vắn, tối ưu mặt tiền và mảng xanh ban công.',
-    pinterestQuery: 'phối cảnh 3D nhà phố hiện đại mặt tiền đẹp',
+    summary: 'Hình ảnh phối cảnh 3D các công trình nhà phố hiện đại thực tế tại Việt Nam: mặt tiền 5m, giật cấp lấy sáng và ban công xanh.',
+    pinterestQuery: 'phối cảnh 3D nhà phố hiện đại việt nam mặt tiền 5m',
     slides: [
       {
         id: 'np-1',
-        angle: 'Mặt tiền chính diện',
-        title: 'Nhà phố hiện đại 3 tầng hình khối tối giản',
-        desc: 'Mặt tiền 5m với mảng kính lấy sáng lớn, lam chắn nắng composite và ban công tràn ngập mảng xanh.',
-        imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-        tag: '3 tầng · Mặt tiền 5m'
+        angle: 'Mặt tiền 5m chính diện',
+        title: 'Nhà phố 4 tầng mặt tiền 5m hiện đại tại Hưng Yên',
+        desc: 'Mặt tiền 5m phân chia khối giật cấp, mảng kính lấy sáng, lam gỗ nhựa ngoài trời và ban công xanh mát.',
+        imageUrl: assetUrl('images/vietnam/models/np-1.jpg'),
+        tag: '4 tầng · Hưng Yên'
       },
       {
         id: 'np-2',
-        angle: 'Góc nghiêng 45°',
-        title: 'Góc nghiêng 45° đón nắng & khoe khối ban công',
-        desc: 'Hệ lam nhôm trang trí tạo hiệu ứng đổ bóng sinh động, ban công kính cường lực mở rộng tầm nhìn.',
-        imageUrl: 'https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?auto=format&fit=crop&w=800&q=80',
-        tag: 'Nghiêng 45° · Lam che nắng'
+        angle: 'Mặt tiền có gara ô tô',
+        title: 'Nhà phố 3 tầng hiện đại có gara ô tô tại Thái Nguyên',
+        desc: 'Tầng 1 bố trí gara ô tô và phòng khách rộng rãi, tầng 2-3 đua ban công kính đón ánh sáng tự nhiên.',
+        imageUrl: assetUrl('images/vietnam/models/np-2.jpg'),
+        tag: '3 tầng có gara · Thái Nguyên'
       },
       {
         id: 'np-3',
-        angle: 'Ban đêm lên đèn',
-        title: 'Phối cảnh hoàng hôn lung linh ánh đèn LED',
-        desc: 'Hệ đèn hắt khe trần ban công và đèn rọi cột tạo chiều sâu sang trọng, ấm cúng khi màn đêm buông xuống.',
-        imageUrl: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80',
-        tag: 'Đèn LED âm trần · Ánh sáng ấm'
+        angle: 'Góc nghiêng 45°',
+        title: 'Góc nghiêng 45° nhà phố 3 tầng hiện đại tại Bình Dương',
+        desc: 'Khối ban công chữ L vươn ra che chắn mưa nắng hướng Tây, đèn LED âm trần tạo điểm nhấn ấm cúng.',
+        imageUrl: assetUrl('images/vietnam/models/np-3.jpg'),
+        tag: 'Nghiêng 45° · Bình Dương'
       },
       {
         id: 'np-4',
-        angle: 'Sân thượng & Giếng trời',
-        title: 'Không gian tầng tum kết hợp sân thượng xanh',
-        desc: 'Khu vực nướng BBQ ngoài trời, giàn pergola che mưa nắng và vườn cây mini trên mái nhà phố.',
-        imageUrl: 'https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=800&q=80',
-        tag: 'Sân thượng xanh · Giếng trời'
+        angle: 'Phối cảnh liền kề',
+        title: 'Nhà phố liền kề 4 tầng kiến trúc hiện đại tối giản',
+        desc: 'Mặt tiền hài hòa với quy hoạch đô thị Việt Nam, tối ưu diện tích sử dụng cho gia đình 2-3 thế hệ.',
+        imageUrl: assetUrl('images/vietnam/models/np-4.jpg'),
+        tag: '4 tầng liền kề · Hiện đại'
       }
     ]
   },
 
   'Nhà ống': {
     typeName: 'Nhà ống',
-    summary: 'Giải pháp kiến trúc cho lô đất mặt tiền hẹp, chiều sâu dài, chú trọng giếng trời và thông gió.',
-    pinterestQuery: 'phối cảnh 3D nhà ống 5m đẹp giếng trời',
+    summary: 'Phối cảnh 3D các công trình nhà ống thực tế tại Việt Nam: mặt tiền 4m - 5m, giếng trời trung tâm và thông gió đối lưu.',
+    pinterestQuery: 'phối cảnh 3D nhà ống việt nam 5m có giếng trời',
     slides: [
       {
         id: 'no-1',
-        angle: 'Mặt tiền 4m - 5m',
-        title: 'Nhà ống hiện đại với mảng gạch bông gió',
-        desc: 'Bố trí gạch thông gió mỹ thuật và cửa nhôm kính giúp lấy sáng tự nhiên và đối lưu gió liên tục.',
-        imageUrl: 'https://images.unsplash.com/photo-1600607687644-c7171b42498f?auto=format&fit=crop&w=800&q=80',
-        tag: 'Mặt tiền hẹp · Gạch bông gió'
+        angle: 'Mặt tiền 4.5m',
+        title: 'Nhà ống 3 tầng có gara ô tô mặt tiền 4.5m tại Thái Nguyên',
+        desc: 'Bố trí giếng trời giữa nhà lấy sáng và thông gió đối lưu liên tục, giải quyết triệt để nhược điểm nhà ống hẹp dài.',
+        imageUrl: assetUrl('images/vietnam/models/no-1.jpg'),
+        tag: 'Mặt tiền 4.5m · Thái Nguyên'
       },
       {
         id: 'no-2',
-        angle: 'Góc nghiêng giật cấp',
-        title: 'Góc nghiêng tạo cảm giác nhà rộng thoáng',
-        desc: 'Thiết kế phân tầng so le tạo điểm nhấn thị giác, che nắng hướng Tây và giảm bớt cảm giác đơn điệu.',
-        imageUrl: 'https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=800&q=80',
-        tag: 'Khối giật cấp · Chống nóng'
+        angle: 'Góc nghiêng thông gió',
+        title: 'Góc nghiêng phân tầng giật cấp tại Bình Dương',
+        desc: 'Ban công so le tạo luồng khí đối lưu mát mẻ, giảm bức xạ nhiệt trực tiếp vào các phòng ngủ.',
+        imageUrl: assetUrl('images/vietnam/models/no-2.jpg'),
+        tag: 'Phân tầng so le · Bình Dương'
       },
       {
         id: 'no-3',
-        angle: 'Ban đêm lên đèn',
-        title: 'Mặt tiền nhà ống nổi bật với đèn hắt viền',
-        desc: 'Đèn rọi điểm nhấn vào mảng tường gạch và bồn cây ban công mang lại nét thanh lịch giữa phố thị.',
-        imageUrl: 'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=80',
-        tag: 'Ánh sáng ấm · Nổi bật'
-      },
-      {
-        id: 'no-4',
-        angle: 'Giếng trời thông tầng',
-        title: 'Lõi giếng trời trung tâm đón ánh sáng tự nhiên',
-        desc: 'Khoảng thông tầng giữa nhà kết hợp tiểu cảnh hồ cá hoặc cây xanh giúp ngôi nhà luôn mát mẻ và vượng khí.',
-        imageUrl: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80',
-        tag: 'Giếng trời · Tiểu cảnh xanh'
+        angle: 'Nhà ống tân cổ điển',
+        title: 'Nhà ống 4 tầng phong cách tân cổ điển tại Quảng Ninh',
+        desc: 'Mặt tiền thanh lịch với phào chỉ tiết chế nhẹ nhàng, vòm cong ban công tăng thêm vẻ sang trọng bề thế.',
+        imageUrl: assetUrl('images/vietnam/models/no-3.jpg'),
+        tag: 'Tân cổ điển 4 tầng · Quảng Ninh'
       }
     ]
   },
 
   'Shophouse': {
     typeName: 'Shophouse',
-    summary: 'Nhà phố thương mại kết hợp ở: tầng 1 cao thoáng kinh doanh, các tầng trên sinh hoạt biệt lập.',
-    pinterestQuery: 'phối cảnh shophouse nhà phố kinh doanh đẹp',
+    summary: 'Mô hình nhà phố thương mại kết hợp ở thực tế tại Việt Nam: tầng 1 kinh doanh sầm uất, tầng trên sinh hoạt biệt lập.',
+    pinterestQuery: 'phối cảnh 3D shophouse nhà phố kinh doanh việt nam',
     slides: [
       {
         id: 'sh-1',
-        angle: 'Tầng 1 kinh doanh',
-        title: 'Mặt tiền kinh doanh kính tràn viền sang trọng',
-        desc: 'Tầng 1 cao thoáng (3.9m – 4.2m) với vách kính cường lực tối đa diện tích trưng bày và nhận diện thương hiệu.',
-        imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
-        tag: 'Kính tràn viền · Kinh doanh'
+        angle: '5 Tầng kinh doanh',
+        title: 'Nhà phố 5 tầng kết hợp kinh doanh tại Hải Phòng',
+        desc: 'Tầng 1 và lửng ốp đá granite sang trọng, vách kính lớn tối đa nhận diện thương hiệu kinh doanh.',
+        imageUrl: assetUrl('images/vietnam/models/sh-1.jpg'),
+        tag: '5 tầng kinh doanh · Hải Phòng'
       },
       {
         id: 'sh-2',
-        angle: 'Góc nghiêng tổng thể',
-        title: 'Góc nghiêng phân tách rõ khu ở và kinh doanh',
-        desc: 'Lối đi và thang bộ riêng biệt cho gia đình, các tầng trên có ban công cây xanh thoáng đãng và cách âm tốt.',
-        imageUrl: 'https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?auto=format&fit=crop&w=800&q=80',
-        tag: 'Lối đi riêng · Cách âm'
+        angle: '3 Mặt tiền đắc địa',
+        title: 'Căn hộ cho thuê & Shophouse 3 mặt tiền 6 tầng',
+        desc: 'Vị trí góc đắc địa, khai thác triệt để 3 mặt thoáng làm căn hộ dịch vụ cao cấp và shophouse thương mại.',
+        imageUrl: assetUrl('images/vietnam/models/sh-2.jpg'),
+        tag: '6 tầng · 3 Mặt tiền'
       },
       {
         id: 'sh-3',
-        angle: 'Phố thương mại ban đêm',
-        title: 'Phối cảnh shophouse về đêm rực rỡ biển hiệu',
-        desc: 'Hệ thống đèn biển bảng và đèn viền kiến trúc thu hút khách hàng, tạo giá trị thương mại vượt trội.',
-        imageUrl: 'https://images.unsplash.com/photo-1507652313519-d4e9174996dd?auto=format&fit=crop&w=800&q=80',
-        tag: 'Ánh sáng thương mại · Sầm uất'
+        angle: 'Mặt tiền thương mại',
+        title: 'Nhà liền kề shophouse phố thương mại sầm uất',
+        desc: 'Lối đi và cầu thang tách biệt hoàn toàn giữa không gian kinh doanh tầng dưới và sinh hoạt gia đình phía trên.',
+        imageUrl: assetUrl('images/vietnam/models/sh-3.jpg'),
+        tag: 'Kinh doanh tách biệt · Hiện đại'
       }
     ]
   },
 
   'Biệt thự': {
     typeName: 'Biệt thự',
-    summary: 'Không gian sống đẳng cấp, biệt lập, hài hòa giữa kiến trúc bề thế và sân vườn cảnh quan resort.',
-    pinterestQuery: 'phối cảnh 3D biệt thự hiện đại sang trọng',
+    summary: 'Phối cảnh 3D các công trình biệt thự đẳng cấp tại Việt Nam: mái chéo hiện đại, tân cổ điển Pháp và sân vườn cảnh quan.',
+    pinterestQuery: 'phối cảnh 3D biệt thự hiện đại việt nam sang trọng',
     slides: [
       {
         id: 'bt-1',
         angle: 'Chính diện bề thế',
-        title: 'Biệt thự hiện đại 3 tầng không gian mở đẳng cấp',
-        desc: 'Hình khối vươn dài thanh thoát, ốp đá tự nhiên marble kết hợp hệ kính Low-E cản nhiệt cao cấp.',
-        imageUrl: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
-        tag: 'Biệt thự 3 tầng · Đá Marble'
+        title: 'Biệt thự hiện đại 3 tầng mái chéo sang trọng tại Hà Nội',
+        desc: 'Hình khối giật cấp mạnh mẽ, ốp đá tự nhiên và lam nhôm cao cấp tạo nên diện mạo bề thế nổi bật.',
+        imageUrl: assetUrl('images/vietnam/models/bt-1.jpg'),
+        tag: 'Biệt thự 3 tầng · Hà Nội'
       },
       {
         id: 'bt-2',
-        angle: 'Góc nghiêng hồ bơi',
-        title: 'Góc nghiêng nhìn ra hồ bơi & sảnh đón rộng',
-        desc: 'Khoảng hiên rộng kết nối phòng khách với hồ bơi vô cực, tạo không gian nghỉ dưỡng chuẩn resort.',
-        imageUrl: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
-        tag: 'Hồ bơi · Sân vườn resort'
+        angle: 'Góc nghiêng & Sân vườn',
+        title: 'Góc nghiêng sân vườn và sảnh đón biệt thự 3 tầng',
+        desc: 'Sảnh đón rộng kết nối trực tiếp với khuôn viên sân vườn cây xanh và đường dạo lát đá tự nhiên.',
+        imageUrl: assetUrl('images/vietnam/models/bt-2.jpg'),
+        tag: 'Sân vườn rộng · Mái chéo'
       },
       {
         id: 'bt-3',
-        angle: 'Ban đêm dạ tiệc',
-        title: 'Biệt thự về đêm với ánh sáng nghệ thuật',
-        desc: 'Đèn hắt tường, đèn âm nước hồ bơi và đèn rọi tán cây tạo khung cảnh dạ tiệc ngoài trời sang trọng.',
-        imageUrl: 'https://images.unsplash.com/photo-1613977257363-707ba9348227?auto=format&fit=crop&w=800&q=80',
-        tag: 'Đèn nghệ thuật · Dạ tiệc'
-      },
-      {
-        id: 'bt-4',
-        angle: 'Cảnh quan sân vườn',
-        title: 'Sân vườn sinh thái bao bọc quanh khối nhà',
-        desc: 'Mật độ cây xanh cao, thảm cỏ nhật và đồi cỏ nhân tạo mang đến không gian sống an lành, hòa hợp thiên nhiên.',
-        imageUrl: 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=800&q=80',
-        tag: 'Cảnh quan sinh thái · Xanh mát'
+        angle: 'Tân cổ điển thượng lưu',
+        title: 'Biệt thự tân cổ điển 3 tầng tại Phú Mỹ Hưng (TP.HCM)',
+        desc: 'Đẳng cấp thượng lưu với thức cột La Mã, vòm mái Mansard kiêu hãnh và ban công nhôm đúc mạ vàng.',
+        imageUrl: assetUrl('images/vietnam/models/bt-3.jpg'),
+        tag: 'Tân cổ điển Pháp · Phú Mỹ Hưng'
       }
     ]
   },
 
   'Nhà vườn': {
     typeName: 'Nhà vườn',
-    summary: 'Nhà ở gắn liền với thiên nhiên, mái dốc Nhật hoặc Thái, hàng hiên rộng và vườn cây ăn trái bình yên.',
-    pinterestQuery: 'phối cảnh nhà vườn mái nhật đẹp nông thôn hiện đại',
+    summary: 'Các công trình nhà vườn nghỉ dưỡng thực tế tại nông thôn & ngoại ô Việt Nam: mái Thái, mái Nhật và vườn cây an lành.',
+    pinterestQuery: 'phối cảnh 3D nhà vườn mái nhật mái thái việt nam đẹp',
     slides: [
       {
         id: 'nv-1',
-        angle: 'Mặt tiền mái Nhật',
-        title: 'Nhà vườn 1 tầng mái Nhật thanh bình, gần gũi',
-        desc: 'Mái ngói dốc nhẹ thoát nước nhanh, hàng hiên rộng có cột ốp đá và bậc tam cấp bề thế kết nối sân trước.',
-        imageUrl: 'https://images.unsplash.com/photo-1598228723793-52759bba239c?auto=format&fit=crop&w=800&q=80',
-        tag: '1 tầng mái Nhật · Hiên rộng'
+        angle: 'Biệt thự vườn cấp 4',
+        title: 'Biệt thự vườn cấp 4 mái Thái đẹp tại Đồng Tháp',
+        desc: 'Mái ngói dốc thoải thoát nước mưa nhanh, khuôn viên sân vườn rộng rãi rợp bóng mát cây ăn trái miền Tây.',
+        imageUrl: assetUrl('images/vietnam/models/nv-1.jpg'),
+        tag: 'Mái Thái · Đồng Tháp'
       },
       {
         id: 'nv-2',
-        angle: 'Góc nghiêng hiên trà',
-        title: 'Khoảng hiên rộng kê bàn trà ngắm cảnh vườn',
-        desc: 'Không gian thư giãn lý tưởng cho người lớn tuổi và trẻ nhỏ, đón trọn gió mát từ khu vườn xung quanh.',
-        imageUrl: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=800&q=80',
-        tag: 'Bàn trà ngoài hiên · Gió tự nhiên'
+        angle: 'Nhà vườn 2 tầng',
+        title: 'Biệt thự nhà vườn 2 tầng tân cổ điển tại Vĩnh Phúc',
+        desc: 'Sự kết hợp hoàn hảo giữa nét quý phái tân cổ điển và không gian sinh thái thoáng mát miền quê.',
+        imageUrl: assetUrl('images/vietnam/models/nv-2.jpg'),
+        tag: 'Nhà vườn 2 tầng · Vĩnh Phúc'
       },
       {
         id: 'nv-3',
-        angle: 'Hoàng hôn ấm áp',
-        title: 'Ánh hoàng hôn buông xuống nhà vườn bình yên',
-        desc: 'Không khí ấm cúng, thư thái sau những giờ làm việc căng thẳng nơi phố thị, đưa thiên nhiên vào cuộc sống.',
-        imageUrl: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80',
-        tag: 'Bình yên · Nghỉ dưỡng'
-      },
-      {
-        id: 'nv-4',
-        angle: 'Lối dạo & Hồ cá',
-        title: 'Lối dạo lát đá phiến giữa thảm cỏ xanh mướt',
-        desc: 'Bố trí chòi nghỉ chân, hồ cá Koi phong thủy và các loại cây ăn trái mang lại may mắn và tài lộc.',
-        imageUrl: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?auto=format&fit=crop&w=800&q=80',
-        tag: 'Hồ cá Koi · Lối dạo đá'
+        angle: 'Nhà 1 tầng 130m²',
+        title: 'Mẫu nhà vườn 1 tầng 130m² (3 phòng ngủ) thanh bình',
+        desc: 'Bố trí 3 phòng ngủ tiện nghi trên một mặt sàn, hàng hiên rộng kê bàn trà thưởng ngoạn thiên nhiên.',
+        imageUrl: assetUrl('images/vietnam/models/nv-3.jpg'),
+        tag: '130m² · 3 Phòng ngủ'
       }
     ]
   },
 
   'Nhà cấp 4': {
     typeName: 'Nhà cấp 4',
-    summary: 'Nhà 1 tầng tiện nghi, chi phí hợp lý, công năng tập trung thuận tiện cho gia đình đa thế hệ.',
-    pinterestQuery: 'phối cảnh nhà cấp 4 chữ L mái thái mái nhật đẹp',
+    summary: 'Hình ảnh phối cảnh nhà cấp 4 mái Thái, mái Nhật chữ L thực tế tại các vùng quê Việt Nam: tiết kiệm, bền đẹp và kiên cố.',
+    pinterestQuery: 'phối cảnh 3D nhà cấp 4 chữ L mái thái việt nam',
     slides: [
       {
         id: 'c4-1',
-        angle: 'Chính diện hiện đại',
-        title: 'Nhà cấp 4 mái dốc hiện đại tối ưu chi phí',
-        desc: 'Thiết kế chữ L tạo sân đậu ô tô rộng rãi, mặt tiền ốp gạch giả đá chân tường chống ẩm mốc bền đẹp.',
-        imageUrl: 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=800&q=80',
-        tag: 'Chữ L · Tiết kiệm chi phí'
+        angle: 'Mái Thái chữ L',
+        title: 'Nhà cấp 4 mái Thái chữ L đẹp nông thôn Việt Nam',
+        desc: 'Thiết kế chữ L tạo sân đỗ ô tô và phơi nông sản rộng rãi, tiết kiệm chi phí xây dựng tối đa.',
+        imageUrl: assetUrl('images/vietnam/models/c4-1.jpg'),
+        tag: 'Mái Thái chữ L · Nông thôn'
       },
       {
         id: 'c4-2',
-        angle: 'Góc nghiêng mái Thái',
-        title: 'Góc nghiêng thể hiện sự bề thế của hệ mái',
-        desc: 'Sảnh phụ dẫn thẳng vào khu vực bếp nấu giúp lưu thông thuận tiện mà không ảnh hưởng phòng khách chính.',
-        imageUrl: 'https://images.unsplash.com/photo-1576941089067-2de3c901e126?auto=format&fit=crop&w=800&q=80',
-        tag: 'Sảnh phụ tiện lợi · Mái Thái'
+        angle: 'Mặt tiền 3 phòng ngủ',
+        title: 'Nhà cấp 4 hiện đại 3 phòng ngủ tiện nghi cho gia đình',
+        desc: 'Chân tường ốp đá chống ẩm mốc mùa mưa lũ, công năng khoa học phù hợp gia đình 2-3 thế hệ.',
+        imageUrl: assetUrl('images/vietnam/models/c4-2.jpg'),
+        tag: 'Chống ẩm mốc · 3 Phòng ngủ'
       },
       {
         id: 'c4-3',
-        angle: 'Chiều tà ấm cúng',
-        title: 'Căn nhà cấp 4 ấm cúng cho gia đình 2-3 thế hệ',
-        desc: 'Bố trí công năng 3 - 4 phòng ngủ trên 1 mặt sàn, thuận tiện cho việc chăm sóc người cao tuổi và trẻ nhỏ.',
-        imageUrl: 'https://images.unsplash.com/photo-1600573472591-ee6b68d14c68?auto=format&fit=crop&w=800&q=80',
-        tag: 'Công năng 3PN · 1 Mặt sàn'
+        angle: 'Mái dốc thanh lịch',
+        title: 'Biệt thự vườn 1 tầng mái dốc thanh lịch, ấm cúng',
+        desc: 'Đơn giản, hiện đại và kiên cố, thời gian thi công nhanh chóng chỉ từ 2.5 – 3 tháng hoàn thiện.',
+        imageUrl: assetUrl('images/vietnam/models/c4-3.jpg'),
+        tag: 'Thi công nhanh · Mái dốc'
       }
     ]
   },
 
   'Lâu đài': {
     typeName: 'Lâu đài',
-    summary: 'Kiến trúc cổ điển Pháp và Tân cổ điển châu Âu nguy nga, lộng lẫy, biểu tượng của sự thịnh vượng vĩnh cửu.',
-    pinterestQuery: 'phối cảnh 3D lâu đài dinh thự tân cổ điển Pháp',
+    summary: 'Các công trình lâu đài, dinh thự cổ điển Pháp tráng lệ thực tế tại Ninh Bình, Hà Nội, Thái Bình, Hải Phòng.',
+    pinterestQuery: 'phối cảnh 3D lâu đài dinh thự ninh bình việt nam',
     slides: [
       {
         id: 'ld-1',
-        angle: 'Chính diện uy nghi',
-        title: 'Dinh thự tân cổ điển Pháp với thức cột La Mã',
-        desc: 'Hệ cột Corinthian đồ sộ, vòm mái uốn lượn và hoa văn đắp nổi thủ công tinh xảo toát lên quyền uy gia chủ.',
-        imageUrl: 'https://images.unsplash.com/photo-1544984243-ec57ea16fe25?auto=format&fit=crop&w=800&q=80',
-        tag: 'Tân cổ điển Pháp · Thức cột'
+        angle: 'Lâu đài 3 tầng Hà Nội',
+        title: 'Lâu đài dinh thự cổ điển 3 tầng tráng lệ tại Hà Nội',
+        desc: 'Quy mô đồ sộ với phù điêu đắp nổi tinh xảo, vòm mái lâu đài uy nghi khẳng định vị thế gia tộc.',
+        imageUrl: assetUrl('images/vietnam/models/ld-1.jpg'),
+        tag: '3 tầng tráng lệ · Hà Nội'
       },
       {
         id: 'ld-2',
-        angle: 'Vòm mái Mansard',
-        title: 'Vòm mái Mansard lợp ngói đá đen đặc trưng',
-        desc: 'Ban công nhôm đúc mạ vàng nghệ thuật, cửa sổ vòm cung mềm mại tạo tỷ lệ vàng hoàn mỹ trong kiến trúc.',
-        imageUrl: 'https://images.unsplash.com/photo-1513584684374-8bab748fbf90?auto=format&fit=crop&w=800&q=80',
-        tag: 'Mái Mansard · Nhôm đúc nghệ thuật'
+        angle: 'Dinh thự Thái Bình',
+        title: 'Biệt thự lâu đài 3 tầng cổ điển Pháp tại Thái Bình',
+        desc: 'Cổng nhôm đúc nguyên khối, thức cột Corinthian hoa lệ và khuôn viên đài phun nước phong thủy vượng khí.',
+        imageUrl: assetUrl('images/vietnam/models/ld-2.jpg'),
+        tag: 'Cổ điển Pháp · Thái Bình'
       },
       {
         id: 'ld-3',
-        angle: 'Đêm hoàng gia',
-        title: 'Hệ thống chiếu sáng kiến trúc lộng lẫy về đêm',
-        desc: 'Đèn rọi phù điêu và đường viền phào chỉ làm nổi bật từng chi tiết điêu khắc nghệ thuật như bảo tàng.',
-        imageUrl: 'https://images.unsplash.com/photo-1541971875076-8f970d573be6?auto=format&fit=crop&w=800&q=80',
-        tag: 'Chiếu sáng nghệ thuật · Lộng lẫy'
-      },
-      {
-        id: 'ld-4',
-        angle: 'Cổng & Đài phun nước',
-        title: 'Đài phun nước phong thủy và lối vào uy nghi',
-        desc: 'Cổng tự động nguyên khối cao 4m, đài phun nước đa tầng kích hoạt tài lộc và sinh khí cho gia tộc.',
-        imageUrl: 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?auto=format&fit=crop&w=800&q=80',
-        tag: 'Đài phun nước · Phong thủy'
+        angle: 'Lâu đài Ninh Bình',
+        title: 'Biệt thự lâu đài tân cổ điển nguy nga tại Ninh Bình',
+        desc: 'Vòm mái Mansard lợp ngói đá đen đặc trưng, hệ phào chỉ đắp vẽ thủ công cầu kỳ từng đường nét.',
+        imageUrl: assetUrl('images/vietnam/models/ld-3.jpg'),
+        tag: 'Mái Mansard · Ninh Bình'
       }
     ]
   },
 
   'Khác': {
     typeName: 'Khác',
-    summary: 'Kiến trúc đương đại, phong cách nhiệt đới Tropical hoặc Đông Dương Indochine độc bản, phá cách.',
-    pinterestQuery: 'phối cảnh kiến trúc nhà đẹp độc đáo phá cách',
+    summary: 'Các công trình kiến trúc độc bản thực tế tại Việt Nam: biệt thự nhiệt đới ven biển Đà Nẵng, dinh thự hoàng gia Bình Dương.',
+    pinterestQuery: 'phối cảnh 3D kiến trúc nhà đẹp độc đáo việt nam',
     slides: [
       {
         id: 'kh-1',
-        angle: 'Phong cách Tropical',
-        title: 'Kiến trúc nhiệt đới mở hòa quyện cây xanh và nắng gió',
-        desc: 'Sử dụng vật liệu mộc mạc như gỗ, đá ong xám, kính lớn và cây xanh vùng nhiệt đới tựa khu resort.',
-        imageUrl: 'https://images.unsplash.com/photo-1523217582562-09d0def993a6?auto=format&fit=crop&w=800&q=80',
-        tag: 'Tropical · Nghỉ dưỡng'
+        angle: 'Biệt thự nhiệt đới',
+        title: 'Biệt thự 2 tầng phong cách nhiệt đới Tropical tại Đà Nẵng',
+        desc: 'Kiến trúc mở đón nắng gió biển, mái hiên vươn sâu và rèm cây xanh che mát không gian sống.',
+        imageUrl: assetUrl('images/vietnam/models/kh-1.jpg'),
+        tag: 'Tropical · Đà Nẵng'
       },
       {
         id: 'kh-2',
-        angle: 'Phong cách Indochine',
-        title: 'Nét đẹp hoài niệm Đông Dương giao thoa Á - Âu',
-        desc: 'Gạch bông hoa văn cổ, vòm cong mềm mại và tông màu trầm ấm tạo chiều sâu văn hóa cho không gian sống.',
-        imageUrl: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=800&q=80',
-        tag: 'Indochine · Hoài niệm Á Âu'
+        angle: 'Dinh thự Bình Dương',
+        title: 'Dinh thự 3 tầng tân cổ điển hoàng gia tại Bình Dương',
+        desc: 'Dành cho những gia chủ sở hữu quỹ đất lớn, yêu cầu dấu ấn kiến trúc độc bản và trường tồn.',
+        imageUrl: assetUrl('images/vietnam/models/kh-2.jpg'),
+        tag: 'Hoàng gia · Bình Dương'
       },
       {
         id: 'kh-3',
-        angle: 'Không gian mở',
-        title: 'Kiến trúc đương đại với các mảng khối tự do',
-        desc: 'Dành cho những gia chủ yêu thích sự độc bản, sáng tạo và không theo khuôn mẫu truyền thống.',
-        imageUrl: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
-        tag: 'Đương đại · Độc bản'
+        angle: 'Biệt thự Indochine',
+        title: 'Biệt thự phong cách Đông Dương Indochine hoài niệm tại Hội An',
+        desc: 'Sự kết hợp tinh tế giữa nét đẹp truyền thống Việt Nam và kiến trúc Pháp cổ điển, vòm cong mềm mại và gạch bông cổ.',
+        imageUrl: assetUrl('images/vietnam/styles/indo-1.jpg'),
+        tag: 'Indochine · Hội An'
       }
     ]
   }
