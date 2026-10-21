@@ -5,7 +5,7 @@ import { Counter, MultiChipGroup, Note, Sec } from '../../components/ui';
 import { COMPANY } from '../../config/company';
 import { covOf } from '../../domain/density';
 import { calcEstimate, levelPrices } from '../../domain/estimate';
-import { DIRS, STARS, calcFS, canChiOf, colorHint, facingHint } from '../../domain/fengshui';
+import { calcFS, canChiOf, colorHint, facingHint } from '../../domain/fengshui';
 import { fmt, numOf } from '../../domain/format';
 import { parseSolarDateToLunar } from '../../domain/lunar';
 import { BUILD_YEARS, OPTS, ROOMS, STYLES, floorHeightPlaceholder, floorNames, suggestRooms } from '../../domain/options';
@@ -156,7 +156,6 @@ export function Step1() {
 export function Step2() {
   const { f, set } = useForm();
   const fs = calcFS(f.year, f.gender, f.buildYear);
-  const facingOpts = DIRS.map(([v, label]) => ({ v, label, sub: fs ? STARS[fs.s.indexOf(v)] : '' }));
 
   const W = numOf(f.w);
   const D = numOf(f.d);
@@ -212,10 +211,19 @@ export function Step2() {
       <One k="fronts" title="Số mặt tiếp giáp đường" aria="Số mặt tiền" opts={OPTS.fronts} />
 
       <Sec title="Hướng mặt tiền gia chủ định làm">
-        {/* La bàn phong thủy Bát Quái trực quan */}
-        <FengShuiCompass fs={fs} facing={f.facing} onSelect={(dir: DirCode) => set({ facing: dir })} />
+        {/* La bàn phong thủy Bát Quái trực quan & cảm biến điện thoại */}
+        <FengShuiCompass
+          fs={fs}
+          facing={f.facing}
+          onSelect={(dir: DirCode, degStr?: string) => {
+            if (degStr) {
+              set({ facing: dir, facingDeg: degStr });
+            } else {
+              set({ facing: dir });
+            }
+          }}
+        />
 
-        <One k="facing" title="Hoặc chọn nhanh hướng" opts={facingOpts} className="dir" bare />
         <Input k="facingDeg" label="Số độ cụ thể (nếu có, đo bằng la bàn)" placeholder="VD: 135° Đông Nam" />
         <p className="hint">{facingHint(fs)}</p>
       </Sec>
