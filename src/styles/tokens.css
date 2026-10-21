@@ -1,0 +1,22 @@
+:root {
+  --bg: #F3F1EC;
+  --surface: #FFFFFF;
+  --surface-2: #FBFAF7;
+  --ink: #1B1F1D;
+  --ink-2: #3D4441;
+  --ink-3: #4A524E;
+  --muted: #5A625E;
+  --line: #DAD6CE;
+  --line-2: #E2DED6;
+  --line-3: #EEEBE5;
+  --line-input: #CFCAC0;
+  --accent: #1E5A4C;
+  --accent-hover: #174A3E;
+  --accent-soft: #E3EEE9;
+  --accent-soft-line: #BFD8CE;
+  --warn: #8A3F0C;
+  --warn-soft: #FBEDE2;
+  --pill: #E9E6DF;
+  --font: 'Be Vietnam Pro', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-doc: 'Times New Roman', Times, serif;
+}
