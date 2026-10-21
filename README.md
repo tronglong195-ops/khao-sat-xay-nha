@@ -27,7 +27,7 @@ npm run build        # build vào dist/
 ## Cài đặt lần đầu (chủ dự án làm)
 
 ### 1. GitHub
-1. Settings → Pages → Source: **GitHub Actions**.
+1. Settings → Pages → Source: **Deploy from a branch** → nhánh `gh-pages`, thư mục `/ (root)` → **Save** (nhánh `gh-pages` do workflow tự tạo sau lần chạy đầu).
 2. Settings → Secrets and variables → Actions → tab **Variables**: thêm `VITE_FIREBASE_API_KEY`, `VITE_FIREBASE_AUTH_DOMAIN`, `VITE_FIREBASE_PROJECT_ID`, `VITE_FIREBASE_STORAGE_BUCKET`, `VITE_FIREBASE_MESSAGING_SENDER_ID`, `VITE_FIREBASE_APP_ID`, `VITE_RECAPTCHA_V3_SITE_KEY` (nếu dùng App Check), `VITE_NOTIFY_URL` (link Apps Script `/exec`).
 3. Actions → “Deploy to GitHub Pages” → **Run workflow** (hoặc push lên `main`).
 
