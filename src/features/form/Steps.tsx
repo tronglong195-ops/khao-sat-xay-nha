@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { FoundationIcon, RoofIcon, TechTip } from '../../components/ArchitectureVisuals';
 import { BuildingPerspectivesSlider } from '../../components/BuildingPerspectivesSlider';
 import { FengShuiCompass } from '../../components/FengShuiCompass';
+import { MaterialShowcaseSlider } from '../../components/MaterialShowcaseSlider';
+import { StylePerspectivesSlider } from '../../components/StylePerspectivesSlider';
 import { Counter, MultiChipGroup, Note, Sec } from '../../components/ui';
 import { COMPANY } from '../../config/company';
 import { covOf } from '../../domain/density';
@@ -406,6 +408,20 @@ export function Step4() {
           );
         })}
       </div>
+
+      {/* Slide ảnh phối cảnh minh họa theo phong cách kiến trúc */}
+      <StylePerspectivesSlider
+        styleId={f.style}
+        savedRef={f.refs}
+        onSaveRef={(refText: string) => {
+          const current = f.refs ? f.refs.trim() : '';
+          if (!current) {
+            set({ refs: refText });
+          } else if (!current.includes(refText)) {
+            set({ refs: current + ' ; ' + refText });
+          }
+        }}
+      />
       <div className="grid2">
         <Input k="colors" label="Màu sắc yêu cầu (hay theo phong thủy?)" placeholder="VD: thích trắng – gỗ, tránh màu đỏ" />
         <Input k="refs" label="Link mẫu nhà gia chủ thích" type="url" inputMode="url" placeholder="Pinterest, Facebook, Zalo…" />
@@ -448,6 +464,20 @@ export function Step4() {
           <One k="wallIn" title="Tường ngăn trong nhà" aria="Tường ngăn" opts={OPTS.wall} />
         </div>
         <p className="hint">Tường bao 220 cách nhiệt, chống thấm tốt hơn (nên dùng cho mặt hướng Tây); tường ngăn 110 tiết kiệm diện tích và tải trọng.</p>
+
+        {/* Bộ sưu tập minh họa vật liệu hoàn thiện thịnh hành */}
+        <MaterialShowcaseSlider
+          currentMaterials={f.materials}
+          onAddMaterial={(matName: string) => {
+            const current = f.materials ? f.materials.trim() : '';
+            if (!current) {
+              set({ materials: matName });
+            } else if (!current.toLowerCase().includes(matName.toLowerCase())) {
+              set({ materials: current + ', ' + matName });
+            }
+          }}
+        />
+
         <Input k="materials" label="Vật liệu khác mong muốn" placeholder="VD: đá ốp mặt tiền, kính Low-E, gỗ óc chó" />
       </div>
     </div>
