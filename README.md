@@ -13,10 +13,10 @@
 
 ## 🌐 LINK TRUY CẬP ONLINE
 
-| Phân hệ | Đường dẫn truy cập Online | Mô tả |
-| :--- | :--- | :--- |
-| 📋 **Khảo sát khách hàng** | **[https://tronglong195-ops.github.io/khao-sat-xay-nha/](https://tronglong195-ops.github.io/khao-sat-xay-nha/)** | Giao diện 7 bước dành cho gia chủ điền thông tin |
-| 🔐 **Quản trị CRM Kỹ sư** | **[https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin](https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin)** | Quản lý hồ sơ, lọc trạng thái, ghi chú & tải Word |
+| Phân hệ | Đường dẫn Firebase Hosting (Chính thức) | Đường dẫn GitHub Pages (Dự phòng) | Mô tả |
+| :--- | :--- | :--- | :--- |
+| 📋 **Khảo sát khách hàng** | **[https://khao-sat-xay-nha.web.app/](https://khao-sat-xay-nha.web.app/)** | [https://tronglong195-ops.github.io/khao-sat-xay-nha/](https://tronglong195-ops.github.io/khao-sat-xay-nha/) | Giao diện 7 bước dành cho gia chủ điền thông tin |
+| 🔐 **Quản trị CRM Kỹ sư** | **[https://khao-sat-xay-nha.web.app/#/admin](https://khao-sat-xay-nha.web.app/#/admin)** | [https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin](https://tronglong195-ops.github.io/khao-sat-xay-nha/#/admin) | Quản lý hồ sơ, lọc trạng thái, ghi chú & tải Word |
 
 ---
 
