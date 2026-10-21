@@ -14,7 +14,7 @@ npm install
 npm run dev          # chạy máy cá nhân: http://localhost:5173/khao-sat-xay-nha/
 npm test             # unit test (toàn bộ docs/TEST_CASES.md)
 npm run test:e2e     # Playwright (Windows dùng Microsoft Edge có sẵn)
-npm run test:rules   # test Firestore rules bằng Emulator (cần Java 21)
+npm run test:rules   # test Firestore rules bằng Emulator (cần Java 21; thư mục chứa repo không được có dấu tiếng Việt — CI trên GitHub luôn chạy bước này)
 npm run build        # build vào dist/
 ```
 
