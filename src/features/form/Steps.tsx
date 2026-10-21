@@ -1,13 +1,20 @@
+import { useState } from 'react';
+import { FoundationIcon, RoofIcon, TechTip } from '../../components/ArchitectureVisuals';
+import { FengShuiCompass } from '../../components/FengShuiCompass';
 import { Counter, MultiChipGroup, Note, Sec } from '../../components/ui';
 import { COMPANY } from '../../config/company';
+import { covOf } from '../../domain/density';
 import { calcEstimate, levelPrices } from '../../domain/estimate';
 import { DIRS, STARS, calcFS, canChiOf, colorHint, facingHint } from '../../domain/fengshui';
-import { fmt } from '../../domain/format';
+import { fmt, numOf } from '../../domain/format';
+import { parseSolarDateToLunar } from '../../domain/lunar';
 import { BUILD_YEARS, OPTS, ROOMS, STYLES, floorHeightPlaceholder, floorNames, suggestRooms } from '../../domain/options';
-import type { FormState } from '../../domain/types';
+import { PRESET_TEMPLATES } from '../../domain/presets';
+import { TECH_EXPLANATIONS } from '../../domain/techExpl';
+import type { DirCode, FormState } from '../../domain/types';
+import { FileField } from './FileField';
 import { Input, Many, One, TextArea } from './fields';
 import { useForm } from './formContext';
-import { FileField } from './FileField';
 
 const AGREE_TEXT = 'Tôi đồng ý để ' + COMPANY.name + ' lưu trữ và xử lý thông tin trên nhằm mục đích tư vấn thiết kế – thi công, theo quy định pháp luật về bảo vệ dữ liệu cá nhân.';
 
@@ -21,9 +28,69 @@ function StepHead({ title, hint }: { title: string; hint: string }) {
 }
 
 export function Step1() {
+  const { f, set } = useForm();
+  const [appliedPreset, setAppliedPreset] = useState<string>('');
+
+  const applyPreset = (id: string) => {
+    const p = PRESET_TEMPLATES.find((t) => t.id === id);
+    if (!p) return;
+    set(p.patch);
+    setAppliedPreset(p.title);
+  };
+
+  // Tính âm lịch từ ngày sinh dương lịch
+  const lunar = parseSolarDateToLunar(f.dob);
+
   return (
     <div className="stack">
       <StepHead title="1. Thông tin chủ nhà & tuổi làm nhà" hint="Năm sinh dùng để xem cung mệnh (Bát trạch), hướng hợp và tuổi động thổ." />
+
+      {/* Thanh gợi ý mẫu nhà điền sẵn */}
+      <div style={{
+        background: '#FAF9F6',
+        border: '1px solid var(--line)',
+        borderRadius: 14,
+        padding: '16px',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.04)'
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 10 }}>
+          <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+            ⚡ Điền nhanh theo mẫu nhà gợi ý phổ biến
+          </span>
+          {appliedPreset && <span style={{ fontSize: 12, color: 'var(--accent)', fontWeight: 600 }}>✓ Đã áp dụng: {appliedPreset}</span>}
+        </div>
+        <p style={{ margin: '0 0 12px', fontSize: 12.5, color: 'var(--muted)', lineHeight: 1.4 }}>
+          Nếu chưa chắc chắn về số phòng hoặc quy mô, anh/chị có thể bấm chọn 1 mẫu bên dưới để tự động điền cấu hình tối ưu nhất:
+        </p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 10 }}>
+          {PRESET_TEMPLATES.map((tmpl) => (
+            <button
+              key={tmpl.id}
+              type="button"
+              onClick={() => applyPreset(tmpl.id)}
+              style={{
+                textAlign: 'left',
+                padding: '12px',
+                borderRadius: 10,
+                border: '1px solid var(--line)',
+                background: '#FFFFFF',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+              className="preset-btn"
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+                <span style={{ fontSize: 20 }}>{tmpl.icon}</span>
+                <strong style={{ fontSize: 13.5, color: 'var(--ink)' }}>{tmpl.title}</strong>
+              </div>
+              <p style={{ margin: 0, fontSize: 11.5, color: 'var(--muted)', lineHeight: 1.35 }}>
+                {tmpl.tagline}
+              </p>
+            </button>
+          ))}
+        </div>
+      </div>
+
       <div className="grid2">
         <Input k="name" label="Tên gia chủ (đầy đủ) *" autoComplete="name" placeholder="VD: Nguyễn Văn An" />
         <Input k="phone" label="Số điện thoại *" type="tel" autoComplete="tel" inputMode="tel" placeholder="09xx xxx xxx" />
@@ -32,14 +99,49 @@ export function Step1() {
       </div>
       <Input k="addr" label="Địa chỉ liên hệ hiện tại" autoComplete="street-address" placeholder="Số nhà, phường/xã, tỉnh/thành" />
       <Many k="concerns" title="Điều anh/chị quan tâm nhất (chọn nhiều)" aria="Vấn đề quan tâm nhất" opts={OPTS.concerns} />
+
       <Sec title="Gia chủ (người đứng tuổi làm nhà)">
         <div className="grid3">
           <Input k="dob" label="Ngày sinh (dương lịch)" type="date" />
           <Input k="year" label="Năm sinh âm lịch" type="number" inputMode="numeric" min="1920" max="2012" placeholder="VD: 1985" />
           <div className="fld"><span className="lb">Giới tính</span><One k="gender" title="Giới tính" aria="Giới tính gia chủ" opts={OPTS.gender} bare /></div>
         </div>
+
+        {/* Thông báo tự động chuyển đổi Dương lịch -> Âm lịch */}
+        {lunar && (
+          <div style={{
+            background: 'var(--accent-soft)',
+            border: '1px solid var(--accent-soft-line)',
+            borderRadius: 8,
+            padding: '8px 12px',
+            fontSize: 12.5,
+            color: 'var(--ink)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: 8,
+            marginTop: 4
+          }}>
+            <span>
+              💡 Ngày <strong>{f.dob}</strong> (Dương lịch) ứng với ngày <strong>{lunar.day}/{lunar.month}{lunar.isLeap ? ' (nhuận)' : ''} năm {lunar.canChiYear} ({lunar.year} Âm lịch)</strong>.
+            </span>
+            {f.year !== String(lunar.year) && (
+              <button
+                type="button"
+                className="btn sm"
+                style={{ fontSize: 12, padding: '4px 10px', minHeight: 32 }}
+                onClick={() => set({ year: String(lunar.year) })}
+              >
+                Áp dụng năm {lunar.year}
+              </button>
+            )}
+          </div>
+        )}
+
         <p className="hint">Sinh trước Tết Nguyên đán thì năm âm lịch là năm liền trước (VD: sinh 20/01/1985 dương lịch → năm Giáp Tý 1984).</p>
       </Sec>
+
       <Sec title="Vợ/chồng (không bắt buộc)">
         <div className="grid2">
           <Input k="year2" label="Năm sinh âm lịch" type="number" inputMode="numeric" min="1920" max="2012" placeholder="VD: 1988" />
@@ -52,9 +154,16 @@ export function Step1() {
 }
 
 export function Step2() {
-  const { f } = useForm();
+  const { f, set } = useForm();
   const fs = calcFS(f.year, f.gender, f.buildYear);
   const facingOpts = DIRS.map(([v, label]) => ({ v, label, sub: fs ? STARS[fs.s.indexOf(v)] : '' }));
+
+  const W = numOf(f.w);
+  const D = numOf(f.d);
+  const lot = W * D;
+  const cov = lot > 0 ? covOf(lot) : 0;
+  const sxdProp = lot > 0 ? Math.round(lot * cov * 10) / 10 : 0;
+
   return (
     <div className="stack">
       <StepHead title="2. Khu đất & pháp lý" hint="Kích thước lô đất cho phép tính mật độ xây dựng và diện tích sàn sơ bộ." />
@@ -65,12 +174,52 @@ export function Step2() {
         <Input k="d" label="Chiều sâu lô đất (m)" type="number" inputMode="decimal" step="0.1" placeholder="VD: 20" />
         <Input k="road" label="Đường trước nhà rộng (m)" type="number" inputMode="decimal" step="0.1" placeholder="VD: 6" />
       </div>
+
+      {/* Hiển thị tính toán nhanh diện tích lô đất */}
+      {lot > 0 && (
+        <div style={{
+          background: '#F6F5F1',
+          border: '1px solid var(--line)',
+          borderRadius: 10,
+          padding: '10px 14px',
+          fontSize: 13,
+          color: 'var(--ink)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap',
+          gap: 10
+        }}>
+          <div>
+            📐 Diện tích lô đất: <strong>{fmt(lot, 1)} m²</strong> · Mật độ XD tối đa: <strong>{fmt(cov * 100, 0)}%</strong> (QCVN 01:2021/BXD)
+            <span style={{ display: 'block', fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>
+              Diện tích xây dựng tầng 1 tối đa theo mật độ: <strong>{fmt(sxdProp, 1)} m²</strong>
+            </span>
+          </div>
+          {f.sxdIn !== String(sxdProp) && (
+            <button
+              type="button"
+              className="btn ghost sm"
+              style={{ fontSize: 12, padding: '4px 10px', minHeight: 32 }}
+              onClick={() => set({ sxdIn: String(sxdProp) })}
+            >
+              Áp dụng {fmt(sxdProp, 1)} m²
+            </button>
+          )}
+        </div>
+      )}
+
       <One k="fronts" title="Số mặt tiếp giáp đường" aria="Số mặt tiền" opts={OPTS.fronts} />
+
       <Sec title="Hướng mặt tiền gia chủ định làm">
-        <One k="facing" title="Hướng nhà" opts={facingOpts} className="dir" bare />
+        {/* La bàn phong thủy Bát Quái trực quan */}
+        <FengShuiCompass fs={fs} facing={f.facing} onSelect={(dir: DirCode) => set({ facing: dir })} />
+
+        <One k="facing" title="Hoặc chọn nhanh hướng" opts={facingOpts} className="dir" bare />
         <Input k="facingDeg" label="Số độ cụ thể (nếu có, đo bằng la bàn)" placeholder="VD: 135° Đông Nam" />
         <p className="hint">{facingHint(fs)}</p>
       </Sec>
+
       <One k="status" title="Hiện trạng" aria="Hiện trạng lô đất" opts={OPTS.status} />
       <Many k="legal" title="Giấy tờ đã có (chọn nhiều)" aria="Pháp lý" opts={OPTS.legal} />
       <One k="permit" title="Vị trí xây dựng có cần xin giấy phép?" aria="Xin phép xây dựng" opts={OPTS.permit} />
@@ -112,6 +261,7 @@ export function Step3() {
   const { f, set } = useForm();
   const est = calcEstimate(f);
   const rooms = suggestRooms(f.adults, f.kids, f.elders);
+
   return (
     <div className="stack">
       <StepHead title="3. Quy mô & công năng từng tầng" hint="Nhu cầu sinh hoạt thực tế của gia đình quyết định mặt bằng – hãy chọn đúng số người và thói quen." />
@@ -121,7 +271,44 @@ export function Step3() {
         <One k="tum" title="Tum thang" opts={OPTS.tum} />
         <One k="basement" title="Tầng hầm" opts={OPTS.basement} />
       </div>
-      <One k="roof" title="Kiểu mái" opts={OPTS.roof} />
+
+      {/* Lựa chọn Kiểu mái với Icon trực quan */}
+      <div className="sec">
+        <span className="sec-h">Kiểu mái</span>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 10 }}>
+          {OPTS.roof.map((rf) => {
+            const on = f.roof === rf;
+            return (
+              <button
+                key={rf}
+                type="button"
+                onClick={() => set({ roof: rf })}
+                style={{
+                  textAlign: 'left',
+                  padding: '12px 14px',
+                  borderRadius: 12,
+                  border: on ? '2px solid var(--accent)' : '1px solid var(--line)',
+                  background: on ? 'var(--accent-soft)' : '#FFFFFF',
+                  color: 'var(--ink)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  gap: 12,
+                  alignItems: 'flex-start'
+                }}
+              >
+                <div style={{ color: on ? 'var(--accent)' : 'var(--muted)', marginTop: 2 }}>
+                  <RoofIcon type={rf} />
+                </div>
+                <div>
+                  <strong style={{ fontSize: 13.5, display: 'block', color: on ? 'var(--accent)' : 'var(--ink)' }}>{rf}</strong>
+                  <TechTip text={TECH_EXPLANATIONS[rf]} />
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
       <div className="grid3">
         <Input k="sxdIn" label="Diện tích xây dựng ước tính / sàn (m²)" type="number" inputMode="decimal"
           placeholder={est.lot > 0 ? 'Tự tính: ' + fmt(est.lot * est.cov, 1) : 'VD: 85'} />
@@ -133,33 +320,44 @@ export function Step3() {
         <One k="balc" title="Đua ban công ngoài kích thước XD (nhà phố)" aria="Đua ban công" opts={OPTS.balc} />
         {f.balc === 'Có đua ban công' && <Input k="balcDua" label="Đua ra khoảng (m)" type="number" inputMode="decimal" step="0.1" placeholder="VD: 1,2" />}
       </div>
-      <One k="cos" title="Cos nền tầng 1 cao hơn mặt sân / đường" aria="Cos nền tầng 1" opts={OPTS.cos} />
+
+      <div className="sec">
+        <One k="cos" title="Cos nền tầng 1 cao hơn mặt sân / đường" aria="Cos nền tầng 1" opts={OPTS.cos} />
+        <TechTip text={TECH_EXPLANATIONS[f.cos]} />
+      </div>
+
       <Sec title="Thành viên & số phòng">
         <div className="grid3">
           {COUNTERS.map((c) => (
             <Counter key={c.k} label={c.label} note={c.note} value={f[c.k]} onChange={(v) => set({ [c.k]: v } as Partial<FormState>)} />
           ))}
         </div>
-        <Note>{rooms.text}</Note>
+        <div className="hint" style={{ marginTop: 8 }}>
+          {rooms.text}
+        </div>
       </Sec>
-      <Sec title="Công năng & chiều cao từng tầng">
-        <p className="hint">Chọn các phòng mong muốn ở mỗi tầng; ghi số lượng vào ô ghi chú. Chiều cao tầng chỉ điền nếu gia chủ có yêu cầu riêng.</p>
-        {floorNames(f).map((nm) => <FloorBox key={nm} name={nm} />)}
+
+      <Sec title="Bố trí công năng & chiều cao từng tầng">
+        <div className="stack" style={{ gap: 14 }}>
+          {floorNames(f).map((name) => (
+            <FloorBox key={name} name={name} />
+          ))}
+        </div>
       </Sec>
+
       <div className="grid2">
-        <One k="altar" title="Phòng thờ" opts={OPTS.altar} />
-        <One k="kitchen" title="Bếp" aria="Kiểu bếp" opts={OPTS.kitchen} />
+        <One k="altar" title="Vị trí phòng thờ" opts={OPTS.altar} />
+        <One k="kitchen" title="Bếp" opts={OPTS.kitchen} />
       </div>
-      <p className="hint">Ban thờ không đặt dưới WC/bếp, lưng tựa tường đặc, tránh xà ngang đè – kỹ sư sẽ chọn hướng đặt bàn thờ theo tuổi gia chủ.</p>
       <div className="grid2">
-        <One k="well" title="Giếng trời (nhà phố sâu)" aria="Giếng trời" opts={OPTS.well} />
-        <One k="business" title="Tầng 1 có kinh doanh?" aria="Kinh doanh tầng 1" opts={OPTS.business} />
+        <One k="well" title="Giếng trời lấy sáng & thông gió" opts={OPTS.well} />
+        <One k="business" title="Tầng 1 có kinh doanh không?" opts={OPTS.business} />
       </div>
-      <Sec title="Thang máy">
-        <One k="lift" title="Thang máy" opts={OPTS.lift} bare />
-        {f.lift === 'Có' && <One k="liftType" title="Loại thang máy" opts={OPTS.liftType} bare />}
-      </Sec>
-      <Many k="spaces" title="Không gian khác mong muốn (chọn nhiều)" aria="Không gian khác" opts={OPTS.spaces} />
+      <div className="grid2">
+        <One k="lift" title="Thang máy" opts={OPTS.lift} />
+        {f.lift === 'Có' && <One k="liftType" title="Loại thang máy" opts={OPTS.liftType} />}
+      </div>
+      <Many k="spaces" title="Không gian chức năng khác (chọn nhiều)" aria="Không gian khác" opts={OPTS.spaces} />
     </div>
   );
 }
@@ -167,16 +365,19 @@ export function Step3() {
 export function Step4() {
   const { f, set } = useForm();
   const fs = calcFS(f.year, f.gender, f.buildYear);
+
   return (
     <div className="stack">
-      <StepHead title="4. Phong cách & vật liệu hoàn thiện" hint="Chọn phong cách gần nhất – kiến trúc sư sẽ tinh chỉnh theo lô đất và ngân sách." />
+      <StepHead title="4. Phong cách kiến trúc & vật liệu" hint="Định hình ngôn ngữ mặt tiền và các vật liệu hoàn thiện chính." />
       <div className="styles" role="group" aria-label="Phong cách kiến trúc">
         {STYLES.map((st) => {
           const on = f.style === st.id;
           return (
             <button key={st.id} type="button" className={'stc' + (on ? ' on' : '')} aria-pressed={on} onClick={() => set({ style: st.id })}>
-              <span className="sw-row" aria-hidden="true">{st.colors.map((c) => <span key={c} className="sw" style={{ background: c }} />)}</span>
-              <span className="stc-n">{st.name}</span>
+              <span className="stc-sw">
+                {st.colors.map((c) => <span key={c} style={{ background: c }} />)}
+              </span>
+              <strong className="stc-n">{st.name}</strong>
               <span className="stc-d">{st.desc}</span>
             </button>
           );
@@ -197,7 +398,10 @@ export function Step4() {
 
       <div className="grp">
         <h3 className="grp-h">Cầu thang bộ & lan can</h3>
-        <One k="stair" title="Hình dạng cầu thang" opts={OPTS.stair} />
+        <div className="sec">
+          <One k="stair" title="Hình dạng cầu thang" opts={OPTS.stair} />
+          <TechTip text={TECH_EXPLANATIONS[f.stair]} />
+        </div>
         <div className="grid2">
           <One k="stairDir" title="Chiều đi lên" aria="Chiều cầu thang" opts={OPTS.stairDir} />
           <One k="stairW" title="Chiều rộng bản thang" opts={OPTS.stairW} />
@@ -228,13 +432,51 @@ export function Step4() {
 }
 
 export function Step5() {
+  const { f, set } = useForm();
   return (
     <div className="stack">
       <StepHead title="5. Kết cấu & điện nước" hint="Không chắc thì chọn “Kỹ sư đề xuất” – kỹ sư sẽ kiểm tra khi khảo sát và tham khảo các công trình lân cận." />
       <div className="grp first">
         <h3 className="grp-h">Kết cấu</h3>
         <One k="soil" title="Địa chất khu đất" aria="Địa chất" opts={OPTS.soil} />
-        <One k="found" title="Phương án móng dự kiến" aria="Phương án móng" opts={OPTS.found} />
+
+        {/* Phương án móng với Icon & giải thích trực quan */}
+        <div className="sec">
+          <span className="sec-h">Phương án móng dự kiến</span>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(220px, 100%), 1fr))', gap: 10 }}>
+            {OPTS.found.map((fd) => {
+              const on = f.found === fd;
+              return (
+                <button
+                  key={fd}
+                  type="button"
+                  onClick={() => set({ found: fd })}
+                  style={{
+                    textAlign: 'left',
+                    padding: '12px 14px',
+                    borderRadius: 12,
+                    border: on ? '2px solid var(--accent)' : '1px solid var(--line)',
+                    background: on ? 'var(--accent-soft)' : '#FFFFFF',
+                    color: 'var(--ink)',
+                    cursor: 'pointer',
+                    display: 'flex',
+                    gap: 12,
+                    alignItems: 'flex-start'
+                  }}
+                >
+                  <div style={{ color: on ? 'var(--accent)' : 'var(--muted)', marginTop: 2 }}>
+                    <FoundationIcon type={fd} />
+                  </div>
+                  <div>
+                    <strong style={{ fontSize: 13.5, display: 'block', color: on ? 'var(--accent)' : 'var(--ink)' }}>{fd}</strong>
+                    <TechTip text={TECH_EXPLANATIONS[fd]} />
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         <Input k="neighbor" label="Công trình lân cận làm móng gì? (nếu biết)" placeholder="VD: nhà bên cạnh 4 tầng ép cọc 250×250, sâu 18 m" />
       </div>
       <div className="grp">
@@ -272,6 +514,7 @@ export function Step6() {
   const { f } = useForm();
   const est = calcEstimate(f);
   const lp = levelPrices();
+
   return (
     <div className="stack">
       <StepHead title="6. Ngân sách & tiến độ" hint="Tổng mức đầu tư tối đa sau khi hoàn thiện – gồm cửa, thiết bị, sơn bả; chưa gồm nội thất rời." />
@@ -286,15 +529,41 @@ export function Step6() {
       </div>
       <Sec title="Bảng tính diện tích sàn tính tiền (sơ bộ)">
         {est.hasLot ? (
-          <div className="est-table">
-            <div className="row"><span className="k">Diện tích lô đất</span><span className="v">{est.lotText}</span></div>
-            <div className="row"><span className="k">Mật độ XD tối đa (QCVN 01:2021/BXD, tham khảo)</span><span className="v">{est.covText}</span></div>
-            <div className="row"><span className="k">{est.sxdLabel}</span><span className="v">{est.sxdText}</span></div>
-            {est.partRows.map((p) => <div className="row" key={p.k}><span className="k">{p.k}</span><span className="v">{p.v}</span></div>)}
-            <div className="row"><span className="k k-strong">Tổng diện tích tính tiền</span><span className="v">{est.areaText}</span></div>
-            <div className="row"><span className="k">Đơn giá tham khảo</span><span className="v">{est.priceText}</span></div>
-            <div className="row"><span className="k k-strong">Dự toán sơ bộ</span><span className="v est-total">{est.totalText}</span></div>
-          </div>
+          <>
+            <div className="est-table">
+              <div className="row"><span className="k">Diện tích lô đất</span><span className="v">{est.lotText}</span></div>
+              <div className="row"><span className="k">Mật độ XD tối đa (QCVN 01:2021/BXD, tham khảo)</span><span className="v">{est.covText}</span></div>
+              <div className="row"><span className="k">{est.sxdLabel}</span><span className="v">{est.sxdText}</span></div>
+              {est.partRows.map((p) => <div className="row" key={p.k}><span className="k">{p.k}</span><span className="v">{p.v}</span></div>)}
+              <div className="row"><span className="k k-strong">Tổng diện tích tính tiền</span><span className="v">{est.areaText}</span></div>
+              <div className="row"><span className="k">Đơn giá tham khảo</span><span className="v">{est.priceText}</span></div>
+              <div className="row"><span className="k k-strong">Dự toán sơ bộ</span><span className="v est-total">{est.totalText}</span></div>
+            </div>
+
+            {/* Chi tiết phân bổ chi phí trong bảng tính */}
+            {est.breakdown && est.breakdown.length > 0 && (
+              <div style={{
+                marginTop: 14,
+                padding: '14px 16px',
+                background: '#F9F8F5',
+                borderRadius: 10,
+                border: '1px solid var(--line)'
+              }}>
+                <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--ink)', display: 'block', marginBottom: 8 }}>
+                  📊 Dự trù bóc tách tỷ trọng chi phí:
+                </span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(200px, 100%), 1fr))', gap: 10 }}>
+                  {est.breakdown.map((b) => (
+                    <div key={b.name} style={{ background: '#FFF', padding: 10, borderRadius: 8, border: '1px solid var(--line)' }}>
+                      <span style={{ fontSize: 12, color: 'var(--muted)', display: 'block' }}>{b.name} ({b.pct}%)</span>
+                      <strong style={{ fontSize: 15, color: 'var(--ink)', display: 'block', margin: '4px 0' }}>{b.tyText}</strong>
+                      <span style={{ fontSize: 11, color: 'var(--muted)', lineHeight: 1.3, display: 'block' }}>{b.desc}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
         ) : (
           <Note bad>Nhập kích thước lô đất (bước 2) hoặc diện tích xây dựng (bước 3) để xem bảng tính.</Note>
         )}

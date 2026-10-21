@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Page } from '../../components/Layout';
+import { QRCodeView } from '../../components/QRCodeView';
 import { Note, Tag } from '../../components/ui';
 import { COMPANY } from '../../config/company';
 import { buildDocument } from '../../domain/document';
@@ -170,6 +171,44 @@ export default function FormPage() {
                     ? ' Phiếu thông tin (file Word) đã được gửi tới kỹ sư' + (form.email ? ', bản sao gửi về ' + form.email : '') + '.'
                     : ' Hồ sơ đã được lưu, kỹ sư sẽ xem trên hệ thống quản lý.'}
                 </p>
+
+                {/* Khối chia sẻ và mã QR hồ sơ */}
+                <div style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: 24,
+                  flexWrap: 'wrap',
+                  padding: '16px',
+                  background: '#FAF9F5',
+                  borderRadius: 14,
+                  border: '1px solid var(--line)',
+                  margin: '16px 0'
+                }}>
+                  <QRCodeView value={window.location.origin + window.location.pathname + '#/?code=' + result.code} size={140} />
+                  <div style={{ maxWidth: 360, textAlign: 'left' }}>
+                    <h3 style={{ fontSize: 16, margin: '0 0 6px', color: 'var(--ink)' }}>
+                      Lưu và chia sẻ hồ sơ khảo sát
+                    </h3>
+                    <p style={{ fontSize: 13, color: 'var(--muted)', margin: '0 0 12px', lineHeight: 1.5 }}>
+                      Quét mã QR trên điện thoại để mở lại thông tin bất cứ lúc nào, hoặc chia sẻ cho người thân cùng xem.
+                    </p>
+                    <button
+                      type="button"
+                      className="btn ghost sm"
+                      onClick={() => {
+                        const text = `Phiếu khảo sát xây nhà của ${form.name} (${result.code}) - ${form.type} ${form.floors} tầng, dự toán: ${est.totalText}`;
+                        if (navigator.clipboard) {
+                          navigator.clipboard.writeText(text);
+                          alert('Đã sao chép thông tin hồ sơ vào bộ nhớ tạm: ' + text);
+                        }
+                      }}
+                    >
+                      📋 Sao chép tóm tắt hồ sơ
+                    </button>
+                  </div>
+                </div>
+
                 <div className="nav-r">
                   {zalo && <a className="btn" href={'https://zalo.me/' + zalo} target="_blank" rel="noopener noreferrer">Chat Zalo với kỹ sư</a>}
                   <button type="button" className="btn ghost" onClick={downloadWord} disabled={busy === 'word'}>Tải file Word (.docx)</button>

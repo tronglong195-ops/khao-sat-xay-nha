@@ -6,6 +6,14 @@ import type { FormState } from './types';
 
 type EstimateInput = Pick<FormState, 'w' | 'd' | 'sxdIn' | 'floors' | 'mezz' | 'tum' | 'basement' | 'roof' | 'found' | 'balc' | 'balcDua' | 'pkg' | 'level' | 'budget'>;
 
+export interface CostItem {
+  name: string;
+  pct: number;
+  tyText: string;
+  desc: string;
+  color: string;
+}
+
 export interface Estimate {
   W: number;
   D: number;
@@ -31,6 +39,7 @@ export interface Estimate {
   budgetText: string;
   budgetBad: boolean;
   excl: string;
+  breakdown: CostItem[];
 }
 
 export function levelPrices(p: Pricing = PRICING): Record<string, number> {
@@ -81,6 +90,30 @@ export function calcEstimate(s: EstimateInput, p: Pricing = PRICING): Estimate {
   const excl = 'Chưa gồm: ' + (fd[1] ? 'chi phí ép/khoan cọc (tính theo md cọc), ' : 'cọc (nếu địa chất yếu phải chuyển móng cọc), ') +
     'nội thất rời, thiết bị điện lạnh, phí xin phép, phá dỡ nhà cũ. Con số chính xác chỉ có sau khảo sát và bóc khối lượng từ hồ sơ thiết kế.';
 
+  const fmtPartTy = (ratio: number) => {
+    const val = (totalTy * ratio);
+    return val >= 1 ? '≈ ' + fmt(val, 2) + ' tỷ' : '≈ ' + fmt(val * 1000, 0) + ' triệu';
+  };
+
+  let breakdown: CostItem[] = [];
+  if (s.pkg === 'Chỉ thiết kế') {
+    breakdown = [
+      { name: 'Hồ sơ thiết kế kiến trúc, kết cấu, MEP', pct: 100, tyText: totalText, desc: 'Bao gồm 3D phối cảnh, hồ sơ xin phép, bản vẽ kỹ thuật thi công', color: '#1E5A4C' }
+    ];
+  } else if (s.pkg === 'Thiết kế + thi công phần thô') {
+    breakdown = [
+      { name: 'Khung bê tông, móng, xây tô & nhân công', pct: 80, tyText: fmtPartTy(0.8), desc: 'Cát, đá, xi măng, sắt thép, đổ sàn BTCT & nhân công hoàn thiện', color: '#1E5A4C' },
+      { name: 'Hệ thống điện nước & ống âm tường', pct: 20, tyText: fmtPartTy(0.2), desc: 'Đường ống cấp thoát nước, đế âm, ống luồn dây điện', color: '#B98E5E' }
+    ];
+  } else {
+    // Trọn gói chìa khóa trao tay
+    breakdown = [
+      { name: 'Móng, kết cấu & xây thô', pct: 48, tyText: fmtPartTy(0.48), desc: 'Bê tông, cốt thép, tường xây, nhân công xây dựng cơ bản', color: '#1E5A4C' },
+      { name: 'Vật tư hoàn thiện (gạch, sơn, cửa, trần)', pct: 38, tyText: fmtPartTy(0.38), desc: 'Cửa đi, cửa sổ, gạch ốp lát, trần thạch cao, sơn nước 3 lớp', color: '#3A7D6E' },
+      { name: 'Hệ thống thiết bị cơ điện & vệ sinh', pct: 14, tyText: fmtPartTy(0.14), desc: 'Thiết bị vệ sinh, bồn nước, đèn chiếu sáng, công tắc ổ cắm', color: '#B98E5E' }
+    ];
+  }
+
   return {
     W, D, lot, cov, sxdIn, sxd, parts, area, price, totalTy, hasLot: sxd > 0,
     lotText: lot > 0 ? fmt(lot, 1) + ' m²' : '—',
@@ -90,6 +123,6 @@ export function calcEstimate(s: EstimateInput, p: Pricing = PRICING): Estimate {
     partRows: parts.map((x) => ({ k: x.k, v: fmt(x.a, 1) + ' m²' })),
     areaText: fmt(area, 1) + ' m²',
     priceText: fmt(price, 2) + ' tr/m²',
-    totalText, budgetText, budgetBad, excl
+    totalText, budgetText, budgetBad, excl, breakdown
   };
 }

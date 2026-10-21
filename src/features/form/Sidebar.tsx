@@ -54,6 +54,51 @@ export function Sidebar({ fs, couple, facing, est, notes }: Props) {
               <span className="hint">{est.areaText} sàn tính tiền × {est.priceText}</span>
             </div>
             <Note bad={est.budgetBad}>{est.budgetText}</Note>
+
+            {est.breakdown && est.breakdown.length > 0 && (
+              <div style={{ marginTop: 12, paddingTop: 12, borderTop: '1px solid var(--line)' }}>
+                <p style={{ margin: '0 0 6px', fontSize: 13, fontWeight: 600, color: 'var(--ink)' }}>
+                  Phân bổ chi phí dự tính:
+                </p>
+                {/* Thanh biểu đồ tỷ lệ phân bổ */}
+                <div style={{
+                  display: 'flex',
+                  height: 10,
+                  borderRadius: 5,
+                  overflow: 'hidden',
+                  background: 'var(--line)',
+                  marginBottom: 10
+                }}>
+                  {est.breakdown.map((item) => (
+                    <div
+                      key={item.name}
+                      title={`${item.name}: ${item.pct}%`}
+                      style={{
+                        width: `${item.pct}%`,
+                        background: item.color
+                      }}
+                    />
+                  ))}
+                </div>
+                {/* Danh sách từng phần */}
+                <div className="stack" style={{ gap: 8 }}>
+                  {est.breakdown.map((item) => (
+                    <div key={item.name} style={{ fontSize: 12, lineHeight: 1.35 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+                        <span style={{ display: 'flex', alignItems: 'center', gap: 6, color: 'var(--ink)' }}>
+                          <span style={{ width: 8, height: 8, borderRadius: '50%', background: item.color, flexShrink: 0 }} />
+                          {item.name} ({item.pct}%)
+                        </span>
+                        <strong style={{ color: 'var(--ink)', marginLeft: 8 }}>{item.tyText}</strong>
+                      </div>
+                      <p style={{ margin: '2px 0 0 14px', fontSize: 11, color: 'var(--muted)' }}>
+                        {item.desc}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         ) : (
           <p className="hint">Nhập kích thước lô đất ở bước 2 để ước tính chi phí.</p>

@@ -14,6 +14,8 @@ const SHEET_NAME   = 'KhachHang';
 const GUI_BAN_SAO_CHO_KHACH = true;                 // gửi email xác nhận + file Word cho khách (nếu khách nhập email)
 const GHI_SHEET    = true;                          // false khi đã dùng Firestore làm nơi lưu chính
 const ADMIN_URL    = '';                            // VD: https://<github-user>.github.io/khao-sat-xay-nha/#/admin
+const TELEGRAM_BOT_TOKEN = '';                      // Tùy chọn: token Bot Telegram (VD: 123456:ABC-DEF...) để nhận báo ngay
+const TELEGRAM_CHAT_ID   = '';                      // Tùy chọn: Chat ID nhận tin (cá nhân hoặc nhóm kỹ sư)
 
 const DOCX_MIME = 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
 
@@ -41,6 +43,15 @@ function doPost(e) {
 
     // 4) Email xác nhận cho khách (kèm bản Word)
     if (GUI_BAN_SAO_CHO_KHACH && d.email && /@/.test(d.email)) guiMailKhach_(d, docBlob);
+
+    // 5) Thông báo Telegram Bot cho kỹ sư (nếu có cấu hình)
+    if (TELEGRAM_BOT_TOKEN && TELEGRAM_CHAT_ID) {
+      try {
+        guiTelegramKySu_(d, docFile.getUrl(), folder.getUrl());
+      } catch (eTele) {
+        console.error('Lỗi gửi Telegram: ' + eTele);
+      }
+    }
 
     return json_({ ok: true, code: d.code, folderUrl: folder.getUrl(), docUrl: docFile.getUrl() });
   } catch (err) {
@@ -113,6 +124,37 @@ function guiMailKhach_(d, docBlob) {
     attachments: [docBlob],
     name: TEN_CONG_TY,
     replyTo: EMAIL_NHAN.split(',')[0]
+  });
+}
+
+function guiTelegramKySu_(d, docUrl, folderUrl) {
+  const sdt = String(d.phone).replace(/\D/g, '');
+  const msg =
+    '🔔 *CÓ KHÁCH HÀNG MỚI KHẢO SÁT NHÀ!*\n' +
+    '───────────────────\n' +
+    '👤 *Khách hàng:* ' + d.name + '\n' +
+    '📞 *Điện thoại:* [' + d.phone + '](tel:' + sdt + ') · [Nhắn Zalo](https://zalo.me/' + sdt + ')\n' +
+    '📍 *Địa chỉ đất:* ' + (d.siteAddr || 'Chưa nhập') + '\n' +
+    '🏠 *Nhu cầu:* ' + d.type + ' ' + d.floors + ' tầng\n' +
+    '💰 *Ngân sách:* ' + d.budget + (d.estimate ? ' (Ước tính: ' + d.estimate + ')' : '') + '\n' +
+    '⏰ *Liên hệ qua:* ' + d.contact + ' (' + d.time + ')\n' +
+    '🔖 *Mã hồ sơ:* `' + d.code + '`\n' +
+    '───────────────────\n' +
+    '📄 [Mở File Word hồ sơ](' + docUrl + ') | 📁 [Thư mục Drive](' + folderUrl + ')' +
+    (ADMIN_URL ? ' | 🛠 [Trang quản trị](' + ADMIN_URL + ')' : '');
+
+  const payload = {
+    chat_id: TELEGRAM_CHAT_ID,
+    text: msg,
+    parse_mode: 'Markdown',
+    disable_web_page_preview: true
+  };
+
+  UrlFetchApp.fetch('https://api.telegram.org/bot' + TELEGRAM_BOT_TOKEN + '/sendMessage', {
+    method: 'post',
+    contentType: 'application/json',
+    payload: JSON.stringify(payload),
+    muteHttpExceptions: true
   });
 }
 
