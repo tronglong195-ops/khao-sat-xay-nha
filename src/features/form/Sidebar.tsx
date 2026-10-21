@@ -137,8 +137,10 @@ export function Sidebar({ fs, couple, facing, est, notes, currentStep = 0 }: Pro
           </button>
         </div>
 
-        {/* 1. Các cảnh báo kỹ thuật tự động theo dữ liệu form */}
-        {notes.map((t) => <Note key={t.t} bad={t.bad}>{t.t}</Note>)}
+        {/* 1. Các cảnh báo nguy cơ thực sự (bad: true) hoặc lưu ý riêng khi đang ở Bước 5 kết cấu điện nước */}
+        {notes.filter((t) => t.bad || currentStep === 4).map((t) => (
+          <Note key={t.t} bad={t.bad}>{t.t}</Note>
+        ))}
 
         {/* 2. Các mẹo kỹ thuật xây nhà thực chiến ngẫu nhiên theo từng bước */}
         {randomTips.length > 0 && (
@@ -152,17 +154,24 @@ export function Sidebar({ fs, couple, facing, est, notes, currentStep = 0 }: Pro
                 style={{
                   padding: '10px 12px',
                   borderRadius: 10,
-                  background: 'var(--accent-soft)',
-                  border: '1px solid var(--accent-soft-line)',
+                  background: tip.tag === 'Quan trọng' ? '#FDF8F5' : 'var(--accent-soft)',
+                  border: tip.tag === 'Quan trọng' ? '1px solid #E8B99D' : '1px solid var(--accent-soft-line)',
                   fontSize: 12.5,
                   lineHeight: 1.45,
                   color: 'var(--ink)'
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 }}>
-                  <strong style={{ fontSize: 12.5, color: '#123B31' }}>{tip.title}</strong>
+                  <strong style={{ fontSize: 12.5, color: tip.tag === 'Quan trọng' ? '#8A3F0C' : '#123B31' }}>{tip.title}</strong>
                   {tip.tag && (
-                    <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--accent)', background: '#FFF', padding: '1px 6px', borderRadius: 4 }}>
+                    <span style={{
+                      fontSize: 10,
+                      fontWeight: 600,
+                      color: tip.tag === 'Quan trọng' ? '#8A3F0C' : 'var(--accent)',
+                      background: '#FFF',
+                      padding: '1px 6px',
+                      borderRadius: 4
+                    }}>
                       {tip.tag}
                     </span>
                   )}
