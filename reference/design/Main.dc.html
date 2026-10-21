@@ -1,0 +1,944 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<title>Phiếu khảo sát nhu cầu xây nhà</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#F3F1EC;font-family:'Be Vietnam Pro',system-ui,sans-serif;color:#1B1F1D}
+*{box-sizing:border-box}
+a{color:#1E5A4C}a:hover{color:#123B31}
+.in{width:100%;min-height:44px;padding:10px 12px;border:1px solid #CFCAC0;border-radius:8px;background:#fff;font:inherit;font-size:15px;color:#1B1F1D}
+.in:focus{outline:2px solid #1E5A4C;outline-offset:1px;border-color:#1E5A4C}
+textarea.in{min-height:96px;resize:vertical}
+.fld{display:flex;flex-direction:column;gap:6px;min-width:0}
+.lb{font-size:13px;font-weight:600;color:#3D4441}
+.hint{font-size:13px;color:#5A625E;line-height:1.55;margin:0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{min-height:44px;padding:8px 16px;border:1px solid #CFCAC0;border-radius:999px;background:#fff;font:inherit;font-size:14px;color:#1B1F1D;cursor:pointer;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.25}
+.chip:hover{border-color:#1E5A4C}
+.chip.on{background:#1E5A4C;border-color:#1E5A4C;color:#fff}
+.dir .chip{border-radius:10px;min-width:104px}
+.sub{font-size:11.5px;color:#5A625E;margin-top:2px}
+.chip.on .sub{color:#D7E8E1}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.sec{display:flex;flex-direction:column;gap:10px}
+.sec-h{margin:0;font-size:15px;font-weight:700;color:#1B1F1D}
+.grp{border-top:1px solid #EEEBE5;padding-top:24px;display:flex;flex-direction:column;gap:20px}
+.grp-h{margin:0;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#1E5A4C}
+.box{border:1px solid #E2DED6;border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:12px;background:#FBFAF7}
+.stp{display:flex;align-items:center;gap:10px;padding:8px 14px 8px 8px;border:1px solid transparent;background:transparent;border-radius:999px;font:inherit;font-size:14px;cursor:pointer;color:#5A625E;min-height:44px}
+.stp .n{width:28px;height:28px;border-radius:50%;border:1px solid #CFCAC0;display:inline-grid;place-items:center;font-size:13px;font-weight:600;background:#fff}
+.stp.on{background:#fff;color:#1B1F1D;border-color:#DAD6CE;font-weight:600}
+.stp.on .n{background:#1E5A4C;color:#fff;border-color:#1E5A4C}
+.stp.done .n{background:#E3EEE9;color:#1E5A4C;border-color:#BFD8CE}
+.ctr{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 8px 8px 14px;border:1px solid #DAD6CE;border-radius:12px;background:#fff}
+.ctr-b{width:44px;height:44px;border-radius:8px;border:1px solid #CFCAC0;background:#F7F6F2;font:inherit;font-size:20px;line-height:1;cursor:pointer;color:#1B1F1D}
+.ctr-b:hover{border-color:#1E5A4C}
+.stc{text-align:left;display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid #DAD6CE;border-radius:14px;background:#fff;cursor:pointer;font:inherit;color:inherit}
+.stc:hover{border-color:#1E5A4C}
+.stc.on{border-color:#1E5A4C;box-shadow:0 0 0 2px #1E5A4C}
+.sw-row{display:flex;height:64px;border-radius:8px;overflow:hidden}
+.sw{flex:1 1 0}
+.card{background:#fff;border:1px solid #E2DED6;border-radius:16px;padding:24px}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:16px;padding:9px 0;border-bottom:1px solid #EEEBE5;font-size:14px}
+.row:last-child{border-bottom:none}
+.k{color:#5A625E}
+.v{font-weight:600;text-align:right}
+.tag{display:inline-block;padding:3px 10px;border-radius:999px;font-size:12.5px;font-weight:600;white-space:nowrap}
+.good{background:#E3EEE9;color:#1E5A4C}
+.bad{background:#FBEDE2;color:#8A3F0C}
+.note{padding:12px 14px;border-radius:10px;font-size:13.5px;line-height:1.55}
+.btn{min-height:48px;padding:12px 24px;border-radius:10px;border:1px solid #1E5A4C;background:#1E5A4C;color:#fff;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.btn:hover{background:#174A3E}
+.btn.ghost{background:#fff;color:#1E5A4C}
+.btn.ghost:hover{background:#F2F7F5}
+.chk{display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.55;cursor:pointer}
+.chk input{width:20px;height:20px;margin-top:2px;accent-color:#1E5A4C;flex:none}
+.file{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;min-height:120px;padding:20px;border:1.5px dashed #BFB9AD;border-radius:12px;background:#FBFAF7;text-align:center;cursor:pointer}
+.file:hover{border-color:#1E5A4C}
+@media (max-width:640px){.hero-h{font-size:28px !important}.main-card{padding:20px !important}}
+</style>
+</helmet>
+<div style="min-height: 100vh; background: #F3F1EC">
+<header style="background: #1B1F1D; color: #FFFFFF">
+<div style="max-width: 1280px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 12px">
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" aria-hidden="true"><path d="M4 18 18 6l14 12" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path><path d="M9 15v15h18V15" stroke="#FFFFFF" stroke-width="2.2" stroke-linejoin="round"></path><path d="M15 30v-8h6v8" stroke="#9FCBBB" stroke-width="2.2" stroke-linejoin="round"></path></svg>
+<div style="display: flex; flex-direction: column">
+<span style="font-weight: 700; font-size: 17px; letter-spacing: 0.02em">[TÊN CÔNG TY]</span>
+<span style="font-size: 12.5px; color: #B9C0BC">Thiết kế &amp; Thi công nhà phố – biệt thự trọn gói</span>
+</div>
+</div>
+<a href="tel:0000000000" style="color: #FFFFFF; text-decoration: none; font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 16px; border: 1px solid #4A524E; border-radius: 999px">Hotline [SỐ ĐIỆN THOẠI]</a>
+</div>
+</header>
+
+<section style="max-width: 1280px; margin: 0 auto; padding: 40px 24px 20px">
+<p style="margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: #1E5A4C">Phiếu thông tin thiết kế nhà</p>
+<h1 class="hero-h" style="margin: 0; font-size: 40px; line-height: 1.2; font-weight: 700; max-width: 820px">Kể cho chúng tôi về ngôi nhà anh/chị mong muốn</h1>
+<p style="margin: 12px 0 0; font-size: 16px; line-height: 1.6; color: #4A524E; max-width: 760px">7 bước, khoảng 10 phút. Câu nào chưa rõ cứ để mặc định hoặc chọn “Kỹ sư đề xuất”. Thông tin này giúp kỹ sư xem tuổi làm nhà, lên mặt bằng công năng, chọn phương án kết cấu – điện nước và lập dự toán sát thực tế trước buổi khảo sát.</p>
+</section>
+
+<nav aria-label="Các bước khảo sát" style="max-width: 1280px; margin: 0 auto; padding: 0 24px 20px">
+<div style="display: flex; flex-wrap: wrap; gap: 6px; padding: 6px; background: #E9E6DF; border-radius: 28px; width: fit-content; max-width: 100%">
+<sc-for list="{{ steps }}" as="item" hint-placeholder-count="7">
+<button type="button" class="{{ item.cls }}" aria-current="{{ item.cur }}" onClick="{{ item.go }}"><span class="n">{{ item.n }}</span><span>{{ item.label }}</span></button>
+</sc-for>
+</div>
+</nav>
+
+<div style="max-width: 1280px; margin: 0 auto; padding: 0 24px 48px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+
+<main class="card main-card" style="flex: 999 1 560px; min-width: 0; padding: 32px; display: flex; flex-direction: column; gap: 28px">
+
+<sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 16px; align-items: flex-start; padding: 24px 0">
+<span class="tag good">Đã gửi thành công</span>
+<h2 style="margin: 0; font-size: 28px">Cảm ơn anh/chị {{ f.name }}!</h2>
+<p style="margin: 0; font-size: 16px; line-height: 1.6; color: #4A524E; max-width: 620px">Mã hồ sơ của anh/chị là <strong style="color: #1B1F1D">{{ code }}</strong>. Kỹ sư phụ trách sẽ liên hệ qua <strong style="color: #1B1F1D">{{ f.contact }}</strong> ({{ f.time }}) để trao đổi phương án và hẹn lịch khảo sát hiện trạng lô đất. Phiếu thông tin (file Word) đã được gửi tới kỹ sư{{ mailNote }}.</p>
+<button type="button" class="btn ghost" onClick="{{ edit }}">Xem lại / sửa thông tin</button>
+</div>
+</sc-if>
+
+<sc-if value="{{ form }}" hint-placeholder-val="{{ true }}">
+
+<sc-if value="{{ s0 }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">1. Thông tin chủ nhà &amp; tuổi làm nhà</h2><p class="hint" style="margin-top: 6px">Năm sinh dùng để xem cung mệnh (Bát trạch), hướng hợp và tuổi động thổ.</p></div>
+<div class="grid2">
+<label class="fld"><span class="lb">Tên gia chủ (đầy đủ) *</span><input class="in" type="text" autocomplete="name" value="{{ f.name }}" onChange="{{ on.name }}" placeholder="VD: Nguyễn Văn An"></label>
+<label class="fld"><span class="lb">Số điện thoại *</span><input class="in" type="tel" autocomplete="tel" value="{{ f.phone }}" onChange="{{ on.phone }}" placeholder="09xx xxx xxx"></label>
+<label class="fld"><span class="lb">Zalo (nếu khác số trên)</span><input class="in" type="tel" value="{{ f.zalo }}" onChange="{{ on.zalo }}"></label>
+<label class="fld"><span class="lb">Email</span><input class="in" type="email" autocomplete="email" value="{{ f.email }}" onChange="{{ on.email }}"></label>
+</div>
+<label class="fld"><span class="lb">Địa chỉ liên hệ hiện tại</span><input class="in" type="text" value="{{ f.addr }}" onChange="{{ on.addr }}" placeholder="Số nhà, phường/xã, tỉnh/thành"></label>
+
+<div class="sec">
+<h3 class="sec-h">Điều anh/chị quan tâm nhất (chọn nhiều)</h3>
+<div class="chips" role="group" aria-label="Vấn đề quan tâm nhất"><sc-for list="{{ concernChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div>
+</div>
+
+<div class="sec">
+<h3 class="sec-h">Gia chủ (người đứng tuổi làm nhà)</h3>
+<div class="grid3">
+<label class="fld"><span class="lb">Ngày sinh (dương lịch)</span><input class="in" type="date" value="{{ f.dob }}" onChange="{{ on.dob }}"></label>
+<label class="fld"><span class="lb">Năm sinh âm lịch</span><input class="in" type="number" inputmode="numeric" min="1920" max="2012" value="{{ f.year }}" onChange="{{ on.year }}" placeholder="VD: 1985"></label>
+<div class="fld"><span class="lb">Giới tính</span><div class="chips" role="group" aria-label="Giới tính gia chủ"><sc-for list="{{ genderChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<p class="hint">Sinh trước Tết Nguyên đán thì năm âm lịch là năm liền trước (VD: sinh 20/01/1985 dương lịch → năm Giáp Tý 1984).</p>
+</div>
+
+<div class="sec">
+<h3 class="sec-h">Vợ/chồng (không bắt buộc)</h3>
+<div class="grid2">
+<label class="fld"><span class="lb">Năm sinh âm lịch</span><input class="in" type="number" inputmode="numeric" min="1920" max="2012" value="{{ f.year2 }}" onChange="{{ on.year2 }}" placeholder="VD: 1988"></label>
+<div class="fld"><span class="lb">Giới tính</span><div class="chips" role="group" aria-label="Giới tính vợ hoặc chồng"><sc-for list="{{ gender2Chips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+</div>
+
+<div class="sec">
+<h3 class="sec-h">Năm dự kiến động thổ</h3>
+<div class="chips" role="group" aria-label="Năm động thổ"><sc-for list="{{ yearChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}<span class="sub">{{ item.sub }}</span></button></sc-for></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s1 }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">2. Khu đất &amp; pháp lý</h2><p class="hint" style="margin-top: 6px">Kích thước lô đất cho phép tính mật độ xây dựng và diện tích sàn sơ bộ.</p></div>
+<label class="fld"><span class="lb">Địa chỉ lô đất xây dựng</span><input class="in" type="text" value="{{ f.siteAddr }}" onChange="{{ on.siteAddr }}" placeholder="Số thửa/tờ bản đồ, đường, phường/xã, tỉnh/thành"></label>
+<div class="sec"><h3 class="sec-h">Kiểu công trình</h3><div class="chips" role="group" aria-label="Kiểu công trình"><sc-for list="{{ typeChips }}" as="item" hint-placeholder-count="8"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="grid3">
+<label class="fld"><span class="lb">Chiều rộng mặt tiền (m)</span><input class="in" type="number" inputmode="decimal" step="0.1" value="{{ f.w }}" onChange="{{ on.w }}" placeholder="VD: 5"></label>
+<label class="fld"><span class="lb">Chiều sâu lô đất (m)</span><input class="in" type="number" inputmode="decimal" step="0.1" value="{{ f.d }}" onChange="{{ on.d }}" placeholder="VD: 20"></label>
+<label class="fld"><span class="lb">Đường trước nhà rộng (m)</span><input class="in" type="number" inputmode="decimal" step="0.1" value="{{ f.road }}" onChange="{{ on.road }}" placeholder="VD: 6"></label>
+</div>
+<div class="sec"><h3 class="sec-h">Số mặt tiếp giáp đường</h3><div class="chips" role="group" aria-label="Số mặt tiền"><sc-for list="{{ frontChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec">
+<h3 class="sec-h">Hướng mặt tiền gia chủ định làm</h3>
+<div class="chips dir" role="group" aria-label="Hướng nhà"><sc-for list="{{ facingChips }}" as="item" hint-placeholder-count="8"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}<span class="sub">{{ item.sub }}</span></button></sc-for></div>
+<label class="fld"><span class="lb">Số độ cụ thể (nếu có, đo bằng la bàn)</span><input class="in" type="text" value="{{ f.facingDeg }}" onChange="{{ on.facingDeg }}" placeholder="VD: 135° Đông Nam"></label>
+<p class="hint">{{ facingHint }}</p>
+</div>
+<div class="sec"><h3 class="sec-h">Hiện trạng</h3><div class="chips" role="group" aria-label="Hiện trạng lô đất"><sc-for list="{{ statusChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Giấy tờ đã có (chọn nhiều)</h3><div class="chips" role="group" aria-label="Pháp lý"><sc-for list="{{ legalChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Vị trí xây dựng có cần xin giấy phép?</h3><div class="chips" role="group" aria-label="Xin phép xây dựng"><sc-for list="{{ permitChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">3. Quy mô &amp; công năng từng tầng</h2><p class="hint" style="margin-top: 6px">Nhu cầu sinh hoạt thực tế của gia đình quyết định mặt bằng – hãy chọn đúng số người và thói quen.</p></div>
+<div class="sec"><h3 class="sec-h">Số tầng nổi (kể cả tầng 1, chưa kể lửng – tum)</h3><div class="chips" role="group" aria-label="Số tầng"><sc-for list="{{ floorChips }}" as="item" hint-placeholder-count="6"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="grid3">
+<div class="sec"><h3 class="sec-h">Tầng lửng</h3><div class="chips" role="group" aria-label="Tầng lửng"><sc-for list="{{ mezzChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Tum thang</h3><div class="chips" role="group" aria-label="Tum thang"><sc-for list="{{ tumChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Tầng hầm</h3><div class="chips" role="group" aria-label="Tầng hầm"><sc-for list="{{ basementChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<div class="sec"><h3 class="sec-h">Kiểu mái</h3><div class="chips" role="group" aria-label="Kiểu mái"><sc-for list="{{ roofChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+
+<div class="grid3">
+<label class="fld"><span class="lb">Diện tích xây dựng ước tính / sàn (m²)</span><input class="in" type="number" inputmode="decimal" value="{{ f.sxdIn }}" onChange="{{ on.sxdIn }}" placeholder="{{ sxdPh }}"></label>
+<label class="fld"><span class="lb">Diện tích sử dụng ước tính / sàn (m²)</span><input class="in" type="number" inputmode="decimal" value="{{ f.sudung }}" onChange="{{ on.sudung }}"></label>
+<label class="fld"><span class="lb">Kích thước xây dựng (dài × rộng)</span><input class="in" type="text" value="{{ f.kichthuoc }}" onChange="{{ on.kichthuoc }}" placeholder="VD: 5 × 17 m"></label>
+</div>
+<p class="hint">Để trống diện tích xây dựng thì hệ thống tự tính theo mật độ tối đa của lô đất.</p>
+
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Đua ban công ngoài kích thước XD (nhà phố)</h3><div class="chips" role="group" aria-label="Đua ban công"><sc-for list="{{ balcChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<sc-if value="{{ hasBalc }}" hint-placeholder-val="{{ false }}"><label class="fld"><span class="lb">Đua ra khoảng (m)</span><input class="in" type="number" inputmode="decimal" step="0.1" value="{{ f.balcDua }}" onChange="{{ on.balcDua }}" placeholder="VD: 1,2"></label></sc-if>
+</div>
+<div class="sec"><h3 class="sec-h">Cos nền tầng 1 cao hơn mặt sân / đường</h3><div class="chips" role="group" aria-label="Cos nền tầng 1"><sc-for list="{{ cosChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}<span class="sub">{{ item.sub }}</span></button></sc-for></div></div>
+
+<div class="sec">
+<h3 class="sec-h">Thành viên &amp; số phòng</h3>
+<div class="grid3">
+<sc-for list="{{ counters }}" as="c" hint-placeholder-count="6">
+<div class="ctr">
+<span style="display: flex; flex-direction: column"><span style="font-size: 14px; font-weight: 600">{{ c.label }}</span><span class="sub" style="margin: 0">{{ c.note }}</span></span>
+<span style="display: flex; align-items: center; gap: 8px">
+<button type="button" class="ctr-b" aria-label="{{ c.decLabel }}" onClick="{{ c.dec }}">−</button>
+<span style="min-width: 24px; text-align: center; font-size: 18px; font-weight: 700" aria-live="polite">{{ c.val }}</span>
+<button type="button" class="ctr-b" aria-label="{{ c.incLabel }}" onClick="{{ c.inc }}">+</button>
+</span>
+</div>
+</sc-for>
+</div>
+<p class="note good" style="margin: 0">{{ roomHint }}</p>
+</div>
+
+<div class="sec">
+<h3 class="sec-h">Công năng &amp; chiều cao từng tầng</h3>
+<p class="hint">Chọn các phòng mong muốn ở mỗi tầng; ghi số lượng vào ô ghi chú. Chiều cao tầng chỉ điền nếu gia chủ có yêu cầu riêng.</p>
+<sc-for list="{{ floorsList }}" as="fl" hint-placeholder-count="4">
+<div class="box">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<h4 style="margin: 0; font-size: 15px">{{ fl.name }}</h4>
+<label style="display: flex; align-items: center; gap: 8px"><span class="lb">Cao tầng (m)</span><input class="in" style="width: 104px" type="number" inputmode="decimal" step="0.1" value="{{ fl.h }}" onChange="{{ fl.onH }}" placeholder="{{ fl.hPh }}"></label>
+</div>
+<div class="chips" role="group" aria-label="{{ fl.aria }}"><sc-for list="{{ fl.rooms }}" as="item" hint-placeholder-count="10"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div>
+<input class="in" type="text" value="{{ fl.note }}" onChange="{{ fl.onNote }}" placeholder="Ghi chú: VD 2 phòng ngủ, 1 WC chung, phòng ngủ ông bà gần WC…" aria-label="{{ fl.noteAria }}">
+</div>
+</sc-for>
+</div>
+
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Phòng thờ</h3><div class="chips" role="group" aria-label="Phòng thờ"><sc-for list="{{ altarChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Bếp</h3><div class="chips" role="group" aria-label="Kiểu bếp"><sc-for list="{{ kitchenChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<p class="hint">Ban thờ không đặt dưới WC/bếp, lưng tựa tường đặc, tránh xà ngang đè – kỹ sư sẽ chọn hướng đặt bàn thờ theo tuổi gia chủ.</p>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Giếng trời (nhà phố sâu)</h3><div class="chips" role="group" aria-label="Giếng trời"><sc-for list="{{ wellChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Tầng 1 có kinh doanh?</h3><div class="chips" role="group" aria-label="Kinh doanh tầng 1"><sc-for list="{{ bizChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<div class="sec"><h3 class="sec-h">Thang máy</h3><div class="chips" role="group" aria-label="Thang máy"><sc-for list="{{ liftChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div>
+<sc-if value="{{ hasLift }}" hint-placeholder-val="{{ false }}"><div class="chips" role="group" aria-label="Loại thang máy"><sc-for list="{{ liftTypeChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></sc-if>
+</div>
+<div class="sec"><h3 class="sec-h">Không gian khác mong muốn (chọn nhiều)</h3><div class="chips" role="group" aria-label="Không gian khác"><sc-for list="{{ spaceChips }}" as="item" hint-placeholder-count="10"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">4. Phong cách &amp; vật liệu hoàn thiện</h2><p class="hint" style="margin-top: 6px">Chọn phong cách gần nhất – kiến trúc sư sẽ tinh chỉnh theo lô đất và ngân sách.</p></div>
+<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 14px">
+<sc-for list="{{ styles }}" as="st" hint-placeholder-count="7">
+<button type="button" class="{{ st.cls }}" aria-pressed="{{ st.pressed }}" onClick="{{ st.pick }}">
+<span class="sw-row" aria-hidden="true"><sc-for list="{{ st.colors }}" as="c" hint-placeholder-count="4"><span class="sw" style="background: {{ c }}"></span></sc-for></span>
+<span style="font-size: 15px; font-weight: 700">{{ st.name }}</span>
+<span style="font-size: 13px; line-height: 1.5; color: #5A625E">{{ st.desc }}</span>
+</button>
+</sc-for>
+</div>
+<div class="grid2">
+<label class="fld"><span class="lb">Màu sắc yêu cầu (hay theo phong thủy?)</span><input class="in" type="text" value="{{ f.colors }}" onChange="{{ on.colors }}" placeholder="VD: thích trắng – gỗ, tránh màu đỏ"></label>
+<label class="fld"><span class="lb">Link mẫu nhà gia chủ thích</span><input class="in" type="url" value="{{ f.refs }}" onChange="{{ on.refs }}" placeholder="Pinterest, Facebook, Zalo…"></label>
+</div>
+<p class="note good" style="margin: 0">{{ colorHint }}</p>
+
+<div class="grp">
+<h3 class="grp-h">Cửa</h3>
+<div class="sec"><h3 class="sec-h">Cửa đi chính</h3><div class="chips" role="group" aria-label="Cửa đi chính"><sc-for list="{{ doorMainChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Cửa thông phòng</h3><div class="chips" role="group" aria-label="Cửa thông phòng"><sc-for list="{{ doorRoomChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Cửa sổ</h3><div class="chips" role="group" aria-label="Cửa sổ"><sc-for list="{{ windowChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+
+<div class="grp">
+<h3 class="grp-h">Cầu thang bộ &amp; lan can</h3>
+<div class="sec"><h3 class="sec-h">Hình dạng cầu thang</h3><div class="chips" role="group" aria-label="Hình dạng cầu thang"><sc-for list="{{ stairChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Chiều đi lên</h3><div class="chips" role="group" aria-label="Chiều cầu thang"><sc-for list="{{ stairDirChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Chiều rộng bản thang</h3><div class="chips" role="group" aria-label="Chiều rộng bản thang"><sc-for list="{{ stairWChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<div class="sec"><h3 class="sec-h">Tay vịn cầu thang trong nhà</h3><div class="chips" role="group" aria-label="Tay vịn trong nhà"><sc-for list="{{ railInChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Lan can ngoài trời (ban công, sân thượng)</h3><div class="chips" role="group" aria-label="Lan can ngoài trời"><sc-for list="{{ railOutChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+
+<div class="grp">
+<h3 class="grp-h">Trần, sàn, tường</h3>
+<div class="sec"><h3 class="sec-h">Trần trang trí</h3><div class="chips" role="group" aria-label="Loại trần"><sc-for list="{{ ceilChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div>
+<sc-if value="{{ hasCeil }}" hint-placeholder-val="{{ true }}"><div class="chips" role="group" aria-label="Phạm vi làm trần"><sc-for list="{{ ceilScopeChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></sc-if>
+</div>
+<div class="sec"><h3 class="sec-h">Sàn nhà</h3><div class="chips" role="group" aria-label="Loại sàn"><sc-for list="{{ floorMatChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div>
+<sc-if value="{{ isTile }}" hint-placeholder-val="{{ true }}"><div class="chips" role="group" aria-label="Kích thước gạch"><sc-for list="{{ tileChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></sc-if>
+</div>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Tường bao ngoài nhà</h3><div class="chips" role="group" aria-label="Tường bao"><sc-for list="{{ wallOutChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Tường ngăn trong nhà</h3><div class="chips" role="group" aria-label="Tường ngăn"><sc-for list="{{ wallInChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<p class="hint">Tường bao 220 cách nhiệt, chống thấm tốt hơn (nên dùng cho mặt hướng Tây); tường ngăn 110 tiết kiệm diện tích và tải trọng.</p>
+<label class="fld"><span class="lb">Vật liệu khác mong muốn</span><input class="in" type="text" value="{{ f.materials }}" onChange="{{ on.materials }}" placeholder="VD: đá ốp mặt tiền, kính Low-E, gỗ óc chó"></label>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">5. Kết cấu &amp; điện nước</h2><p class="hint" style="margin-top: 6px">Không chắc thì chọn “Kỹ sư đề xuất” – kỹ sư sẽ kiểm tra khi khảo sát và tham khảo các công trình lân cận.</p></div>
+
+<div class="grp" style="border-top: none; padding-top: 0">
+<h3 class="grp-h">Kết cấu</h3>
+<div class="sec"><h3 class="sec-h">Địa chất khu đất</h3><div class="chips" role="group" aria-label="Địa chất"><sc-for list="{{ soilChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Phương án móng dự kiến</h3><div class="chips" role="group" aria-label="Phương án móng"><sc-for list="{{ foundChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<label class="fld"><span class="lb">Công trình lân cận làm móng gì? (nếu biết)</span><input class="in" type="text" value="{{ f.neighbor }}" onChange="{{ on.neighbor }}" placeholder="VD: nhà bên cạnh 4 tầng ép cọc 250×250, sâu 18 m"></label>
+</div>
+
+<div class="grp">
+<h3 class="grp-h">Cấp – thoát nước</h3>
+<div class="sec"><h3 class="sec-h">Nguồn nước đầu vào</h3><div class="chips" role="group" aria-label="Nguồn nước"><sc-for list="{{ waterInChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div>
+<input class="in" type="text" value="{{ f.waterPos }}" onChange="{{ on.waterPos }}" placeholder="Vị trí đầu chờ nước so với công trình (VD: góc trái mặt tiền)" aria-label="Vị trí đầu chờ nước"></div>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Thoát nước ra phía</h3><div class="chips" role="group" aria-label="Hướng thoát nước"><sc-for list="{{ waterOutChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<label class="fld"><span class="lb">Cos rãnh thoát thấp hơn cos nhà hiện trạng (cm)</span><input class="in" type="number" inputmode="decimal" value="{{ f.drainCos }}" onChange="{{ on.drainCos }}" placeholder="VD: 40"></label>
+</div>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Bể chứa nước ngầm</h3><div class="chips" role="group" aria-label="Bể nước ngầm"><sc-for list="{{ tankChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Bể phốt</h3><div class="chips" role="group" aria-label="Bể phốt"><sc-for list="{{ septicChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+</div>
+
+<div class="grp">
+<h3 class="grp-h">Điện &amp; hệ thống kỹ thuật</h3>
+<div class="sec"><h3 class="sec-h">Cột điện đi vào công trình từ phía</h3><div class="chips" role="group" aria-label="Vị trí cột điện"><sc-for list="{{ poleChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Điều hòa cục bộ lắp ở (chọn nhiều)</h3><div class="chips" role="group" aria-label="Phòng lắp điều hòa"><sc-for list="{{ acChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Điều hòa trung tâm</h3><div class="chips" role="group" aria-label="Điều hòa trung tâm"><sc-for list="{{ vrvChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Năng lượng mặt trời</h3><div class="chips" role="group" aria-label="Năng lượng mặt trời"><sc-for list="{{ solarChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Camera an ninh</h3><div class="chips" role="group" aria-label="Camera an ninh"><sc-for list="{{ camChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Máy phát điện dự phòng</h3><div class="chips" role="group" aria-label="Máy phát điện"><sc-for list="{{ genChips }}" as="item" hint-placeholder-count="2"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<div class="sec"><h3 class="sec-h">Hệ thống khác (chọn nhiều)</h3><div class="chips" role="group" aria-label="Hệ thống khác"><sc-for list="{{ sysChips }}" as="item" hint-placeholder-count="5"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">6. Ngân sách &amp; tiến độ</h2><p class="hint" style="margin-top: 6px">Tổng mức đầu tư tối đa sau khi hoàn thiện – gồm cửa, thiết bị, sơn bả; chưa gồm nội thất rời.</p></div>
+<div class="sec"><h3 class="sec-h">Tổng mức đầu tư tối đa</h3><div class="chips" role="group" aria-label="Ngân sách"><sc-for list="{{ budgetChips }}" as="item" hint-placeholder-count="6"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Gói dịch vụ</h3><div class="chips" role="group" aria-label="Gói dịch vụ"><sc-for list="{{ pkgChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<sc-if value="{{ showLevel }}" hint-placeholder-val="{{ true }}">
+<div class="sec"><h3 class="sec-h">Mức hoàn thiện</h3><div class="chips" role="group" aria-label="Mức hoàn thiện"><sc-for list="{{ levelChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}<span class="sub">{{ item.sub }}</span></button></sc-for></div></div>
+</sc-if>
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Thời điểm muốn khởi công</h3><div class="chips" role="group" aria-label="Thời điểm khởi công"><sc-for list="{{ startChips }}" as="item" hint-placeholder-count="4"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<label class="fld"><span class="lb">Ngày dự kiến động thổ (nếu đã chọn)</span><input class="in" type="date" value="{{ f.dongtho }}" onChange="{{ on.dongtho }}"></label>
+</div>
+
+<div class="sec">
+<h3 class="sec-h">Bảng tính diện tích sàn tính tiền (sơ bộ)</h3>
+<sc-if value="{{ hasLot }}" hint-placeholder-val="{{ true }}">
+<div style="border: 1px solid #E2DED6; border-radius: 12px; padding: 4px 16px; background: #FBFAF7">
+<div class="row"><span class="k">Diện tích lô đất</span><span class="v">{{ est.lot }}</span></div>
+<div class="row"><span class="k">Mật độ XD tối đa (QCVN 01:2021/BXD, tham khảo)</span><span class="v">{{ est.cov }}</span></div>
+<div class="row"><span class="k">{{ est.sxdLabel }}</span><span class="v">{{ est.sxd }}</span></div>
+<sc-for list="{{ est.parts }}" as="p" hint-placeholder-count="5"><div class="row"><span class="k">{{ p.k }}</span><span class="v">{{ p.v }}</span></div></sc-for>
+<div class="row"><span class="k" style="color: #1B1F1D; font-weight: 600">Tổng diện tích tính tiền</span><span class="v">{{ est.area }}</span></div>
+<div class="row"><span class="k">Đơn giá tham khảo</span><span class="v">{{ est.price }}</span></div>
+<div class="row"><span class="k" style="color: #1B1F1D; font-weight: 700">Dự toán sơ bộ</span><span class="v" style="font-size: 18px; color: #1E5A4C">{{ est.total }}</span></div>
+</div>
+</sc-if>
+<sc-if value="{{ noLot }}" hint-placeholder-val="{{ false }}"><p class="note bad" style="margin: 0">Nhập kích thước lô đất (bước 2) hoặc diện tích xây dựng (bước 3) để xem bảng tính.</p></sc-if>
+<p class="hint">{{ est.excl }}</p>
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ s6 }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 28px">
+<div><h2 style="margin: 0; font-size: 22px">7. Tổng mặt bằng &amp; xác nhận</h2><p class="hint" style="margin-top: 6px">Ảnh sổ đỏ, sơ đồ hiện trạng vẽ tay hoặc ảnh chụp lô đất giúp kỹ sư lên phương án nhanh và chính xác hơn.</p></div>
+<label class="file">
+<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#1E5A4C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4"></path><path d="m7 9 5-5 5 5"></path><path d="M4 16v3a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-3"></path></svg>
+<span style="font-size: 15px; font-weight: 600">Tải lên sơ đồ hiện trạng, ảnh sổ đỏ, ảnh lô đất</span>
+<span class="hint">{{ fileText }}</span>
+<input type="file" multiple accept="image/*,application/pdf" onChange="{{ onFiles }}" style="position: absolute; width: 1px; height: 1px; opacity: 0">
+</label>
+<label class="fld"><span class="lb">Mô tả tổng mặt bằng</span><textarea class="in" value="{{ f.siteNote }}" onChange="{{ on.siteNote }}" placeholder="Giữ/phá phần nào của hiện trạng, vị trí đặt nhà mới, kích thước chi tiết, vị trí sảnh chính – sảnh phụ, cổng, hướng chính…"></textarea></label>
+
+<div class="grid2">
+<div class="sec"><h3 class="sec-h">Liên hệ qua</h3><div class="chips" role="group" aria-label="Kênh liên hệ"><sc-for list="{{ contactChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+<div class="sec"><h3 class="sec-h">Thời gian thuận tiện</h3><div class="chips" role="group" aria-label="Thời gian liên hệ"><sc-for list="{{ timeChips }}" as="item" hint-placeholder-count="3"><button type="button" class="{{ item.cls }}" aria-pressed="{{ item.pressed }}" onClick="{{ item.pick }}">{{ item.label }}</button></sc-for></div></div>
+</div>
+<label class="fld"><span class="lb">Ghi chú thêm cho kiến trúc sư</span><textarea class="in" value="{{ f.notes }}" onChange="{{ on.notes }}" placeholder="VD: cần sân phơi kín, nuôi chó, hay tụ họp gia đình đông người…"></textarea></label>
+<label class="chk"><input type="checkbox" checked="{{ f.agree }}" onChange="{{ toggleAgree }}"><span>Tôi đồng ý để [TÊN CÔNG TY] lưu trữ và xử lý thông tin trên nhằm mục đích tư vấn thiết kế – thi công, theo quy định pháp luật về bảo vệ dữ liệu cá nhân.</span></label>
+</div>
+</sc-if>
+
+<sc-if value="{{ hasErr }}" hint-placeholder-val="{{ false }}"><p class="note bad" role="alert" style="margin: 0">{{ err }}</p></sc-if>
+
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; border-top: 1px solid #EEEBE5">
+<sc-if value="{{ notFirst }}" hint-placeholder-val="{{ false }}"><button type="button" class="btn ghost" onClick="{{ prev }}">← Quay lại</button></sc-if>
+<sc-if value="{{ isFirst }}" hint-placeholder-val="{{ true }}"><span></span></sc-if>
+<sc-if value="{{ notLast }}" hint-placeholder-val="{{ true }}"><button type="button" class="btn" onClick="{{ next }}">Tiếp tục →</button></sc-if>
+<sc-if value="{{ isLast }}" hint-placeholder-val="{{ false }}"><button type="button" class="btn" onClick="{{ openPreview }}">Xem trước phiếu Word →</button></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ preview }}" hint-placeholder-val="{{ false }}">
+<div style="display: flex; flex-direction: column; gap: 20px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px">
+<div><h2 style="margin: 0; font-size: 22px">Xem trước phiếu thông tin</h2><p class="hint" style="margin-top: 6px">Đây là nội dung file Word sẽ gửi cho kỹ sư. Anh/chị kiểm tra lại, có thể tải về để lưu.</p></div>
+<span class="tag good">{{ doc.fileName }}</span>
+</div>
+<div style="background: #E9E6DF; border-radius: 12px; padding: 24px 12px; overflow-x: auto">
+<article aria-label="Xem trước phiếu Word" style="max-width: 794px; min-width: 520px; margin: 0 auto; background: #FFFFFF; box-shadow: 0 2px 14px rgba(0,0,0,0.14); padding: 56px 48px 64px 72px; font-family: 'Times New Roman', Times, serif; font-size: 15px; line-height: 1.45; color: #000000">
+<div style="display: flex; justify-content: space-between; gap: 24px; align-items: flex-start">
+<div style="display: flex; flex-direction: column"><span style="font-weight: 700; text-transform: uppercase">[TÊN CÔNG TY]</span><span style="font-size: 13px">Thiết kế &amp; Thi công nhà phố – biệt thự trọn gói</span><span style="font-size: 13px">Hotline: [SỐ ĐIỆN THOẠI]</span></div>
+<div style="display: flex; flex-direction: column; text-align: right; font-size: 13px"><span>Mã hồ sơ: <strong>{{ doc.code }}</strong></span><span style="font-style: italic">{{ doc.dateLine }}</span></div>
+</div>
+<h1 style="margin: 28px 0 4px; text-align: center; font-size: 19px; font-weight: 700; letter-spacing: 0.02em">PHIẾU THÔNG TIN THIẾT KẾ NHÀ</h1>
+<p style="margin: 0 0 20px; text-align: center; font-style: italic; font-size: 14px">(Gia chủ cung cấp làm cơ sở lập phương án thiết kế – thi công)</p>
+<sc-for list="{{ doc.sections }}" as="sec" hint-placeholder-count="6">
+<div style="margin-top: 14px">
+<h2 style="margin: 0 0 6px; font-size: 15px; font-weight: 700">{{ sec.title }}</h2>
+<table style="width: 100%; border-collapse: collapse; font-size: 14px">
+<tbody>
+<sc-for list="{{ sec.rows }}" as="r" hint-placeholder-count="6"><tr><td style="border: 1px solid #000000; padding: 4px 8px; vertical-align: top; width: 34%">{{ r.k }}</td><td style="border: 1px solid #000000; padding: 4px 8px; vertical-align: top; white-space: pre-line">{{ r.v }}</td></tr></sc-for>
+</tbody>
+</table>
+</div>
+</sc-for>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; margin-top: 36px; text-align: center">
+<div style="display: flex; flex-direction: column"><strong>CHỦ NHÀ</strong><span style="font-style: italic; font-size: 13px">(Ký, ghi rõ họ tên)</span><span style="margin-top: 72px; font-weight: 700">{{ f.name }}</span></div>
+<div style="display: flex; flex-direction: column"><strong>ĐẠI DIỆN [TÊN CÔNG TY]</strong><span style="font-style: italic; font-size: 13px">(Ký, ghi rõ họ tên)</span></div>
+</div>
+</article>
+</div>
+<sc-if value="{{ hasNotice }}" hint-placeholder-val="{{ false }}"><p class="note bad" role="status" style="margin: 0">{{ notice }}</p></sc-if>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-top: 20px; border-top: 1px solid #EEEBE5">
+<button type="button" class="btn ghost" onClick="{{ closePreview }}">← Sửa lại thông tin</button>
+<div style="display: flex; flex-wrap: wrap; gap: 12px">
+<button type="button" class="btn ghost" onClick="{{ downloadWord }}">Tải file Word (.docx)</button>
+<button type="button" class="btn" onClick="{{ submit }}">Xác nhận &amp; gửi cho kỹ sư</button>
+</div>
+</div>
+</div>
+</sc-if>
+</main>
+
+<aside aria-label="Kết quả sơ bộ" style="flex: 1 1 340px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 17px">Phong thủy gia chủ</h2>
+<sc-if value="{{ noFs }}" hint-placeholder-val="{{ false }}"><p class="hint">Nhập năm sinh âm lịch ở bước 1 để xem mệnh, cung phi, hướng hợp và tuổi làm nhà.</p></sc-if>
+<sc-if value="{{ hasFs }}" hint-placeholder-val="{{ true }}">
+<div>
+<div class="row"><span class="k">Tuổi</span><span class="v">{{ fs.yearText }}</span></div>
+<div class="row"><span class="k">Mệnh (nạp âm)</span><span class="v">{{ fs.napam }}</span></div>
+<div class="row"><span class="k">Cung phi</span><span class="v">{{ fs.cungText }}</span></div>
+<div class="row"><span class="k">Nhóm</span><span class="v">{{ fs.group }}</span></div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<sc-for list="{{ fs.goodDirs }}" as="g" hint-placeholder-count="4"><div style="padding: 10px 12px; border-radius: 10px; background: #E3EEE9"><div style="font-size: 12px; color: #1E5A4C; font-weight: 600">{{ g.star }}</div><div style="font-size: 15px; font-weight: 700">{{ g.dir }}</div></div></sc-for>
+</div>
+<sc-if value="{{ hasFacing }}" hint-placeholder-val="{{ false }}"><p class="{{ facingCls }}" style="margin: 0">{{ facingText }}</p></sc-if>
+<div>
+<div class="row"><span class="k">Tuổi mụ năm {{ fs.by }} ({{ fs.byCanChi }})</span><span class="v">{{ fs.mu }}</span></div>
+<div class="row"><span class="k">Kim Lâu</span><span class="{{ fs.klCls }}">{{ fs.klText }}</span></div>
+<div class="row"><span class="k">Hoang Ốc</span><span class="{{ fs.hoCls }}">{{ fs.hoText }}</span></div>
+<div class="row"><span class="k">Tam Tai</span><span class="{{ fs.ttCls }}">{{ fs.ttText }}</span></div>
+</div>
+<p class="{{ fs.verdictCls }}" style="margin: 0">{{ fs.verdict }}</p>
+<sc-if value="{{ hasFs2 }}" hint-placeholder-val="{{ false }}"><p class="hint">{{ coupleText }}</p></sc-if>
+</sc-if>
+</section>
+
+<section class="card" style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 17px">Dự toán sơ bộ</h2>
+<sc-if value="{{ hasLot }}" hint-placeholder-val="{{ true }}">
+<div style="display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 32px; font-weight: 700; color: #1E5A4C; line-height: 1.15">{{ est.total }}</span>
+<span class="hint">{{ est.area }} sàn tính tiền × {{ est.price }}</span>
+</div>
+<p class="{{ est.budgetCls }}" style="margin: 0">{{ est.budgetText }}</p>
+</sc-if>
+<sc-if value="{{ noLot }}" hint-placeholder-val="{{ false }}"><p class="hint">Nhập kích thước lô đất ở bước 2 để ước tính chi phí.</p></sc-if>
+<p class="hint" style="font-size: 12px">Đơn giá tham khảo thị trường, sẽ được chốt sau khi bóc khối lượng từ hồ sơ thiết kế.</p>
+</section>
+
+<section class="card" style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 17px">Lưu ý kỹ thuật</h2>
+<sc-for list="{{ techNotes }}" as="t" hint-placeholder-count="2"><p class="{{ t.cls }}" style="margin: 0">{{ t.t }}</p></sc-for>
+</section>
+
+<section class="card" style="display: flex; flex-direction: column; gap: 10px">
+<h2 style="margin: 0; font-size: 17px">Sau khi gửi thông tin</h2>
+<sc-for list="{{ process }}" as="p" hint-placeholder-count="5"><div style="display: flex; gap: 12px; align-items: flex-start; font-size: 14px; line-height: 1.5"><span style="flex: none; width: 26px; height: 26px; border-radius: 50%; background: #1B1F1D; color: #FFFFFF; display: inline-grid; place-items: center; font-size: 12px; font-weight: 600">{{ p.n }}</span><span>{{ p.t }}</span></div></sc-for>
+</section>
+</aside>
+</div>
+
+<footer style="border-top: 1px solid #DAD6CE">
+<div style="max-width: 1280px; margin: 0 auto; padding: 20px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 13px; color: #5A625E">
+<span>© [TÊN CÔNG TY] · [ĐỊA CHỈ VĂN PHÒNG]</span>
+<span>Kết quả phong thủy và dự toán trên trang mang tính tham khảo.</span>
+</div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"priceTho":{"editor":"float","default":4.2,"min":2,"max":10,"step":0.1,"unit":"tr/m²","section":"Đơn giá tham khảo (triệu/m²)"},"priceCoBan":{"editor":"float","default":6.3,"min":3,"max":15,"step":0.1,"unit":"tr/m²","section":"Đơn giá tham khảo (triệu/m²)"},"priceKha":{"editor":"float","default":7.5,"min":3,"max":20,"step":0.1,"unit":"tr/m²","section":"Đơn giá tham khảo (triệu/m²)"},"priceCaoCap":{"editor":"float","default":9.5,"min":4,"max":30,"step":0.1,"unit":"tr/m²","section":"Đơn giá tham khảo (triệu/m²)"},"designFee":{"editor":"float","default":0.18,"min":0.05,"max":1,"step":0.01,"unit":"tr/m²","section":"Đơn giá tham khảo (triệu/m²)"},"$preview":{"width":1360,"height":1800}}'>
+const CAN = ['Giáp','Ất','Bính','Đinh','Mậu','Kỷ','Canh','Tân','Nhâm','Quý'];
+const CHI = ['Tý','Sửu','Dần','Mão','Thìn','Tỵ','Ngọ','Mùi','Thân','Dậu','Tuất','Hợi'];
+const NAPAM = ['Hải Trung Kim','Lư Trung Hỏa','Đại Lâm Mộc','Lộ Bàng Thổ','Kiếm Phong Kim','Sơn Đầu Hỏa','Giản Hạ Thủy','Thành Đầu Thổ','Bạch Lạp Kim','Dương Liễu Mộc','Tuyền Trung Thủy','Ốc Thượng Thổ','Tích Lịch Hỏa','Tùng Bách Mộc','Trường Lưu Thủy','Sa Trung Kim','Sơn Hạ Hỏa','Bình Địa Mộc','Bích Thượng Thổ','Kim Bạch Kim','Phú Đăng Hỏa','Thiên Hà Thủy','Đại Trạch Thổ','Thoa Xuyến Kim','Tang Đố Mộc','Đại Khê Thủy','Sa Trung Thổ','Thiên Thượng Hỏa','Thạch Lựu Mộc','Đại Hải Thủy'];
+const DIRS = [['B','Bắc'],['DB','Đông Bắc'],['D','Đông'],['DN','Đông Nam'],['N','Nam'],['TN','Tây Nam'],['T','Tây'],['TB','Tây Bắc']];
+const DN = {}; DIRS.forEach(function (d) { DN[d[0]] = d[1]; });
+const STARS = ['Sinh Khí','Thiên Y','Diên Niên','Phục Vị','Họa Hại','Lục Sát','Ngũ Quỷ','Tuyệt Mệnh'];
+const CUNG = {
+  1: ['Khảm','Thủy',['DN','D','N','B','T','TB','DB','TN']],
+  2: ['Khôn','Thổ',['DB','T','TB','TN','D','N','DN','B']],
+  3: ['Chấn','Mộc',['N','B','DN','D','TN','DB','TB','T']],
+  4: ['Tốn','Mộc',['B','N','D','DN','TB','T','TN','DB']],
+  6: ['Càn','Kim',['T','DB','TN','TB','DN','B','D','N']],
+  7: ['Đoài','Kim',['TB','TN','DB','T','B','DN','N','D']],
+  8: ['Cấn','Thổ',['TN','TB','T','DB','N','D','B','DN']],
+  9: ['Ly','Hỏa',['D','DN','B','N','DB','TN','T','TB']]
+};
+const EAST = [1,3,4,9];
+const COLORS = {
+  'Kim': 'Trắng, ghi, xám bạc, vàng ánh kim; vàng – nâu đất (Thổ sinh Kim). Hạn chế đỏ, hồng (Hỏa khắc Kim).',
+  'Mộc': 'Xanh lá, màu gỗ tự nhiên; đen – xanh dương (Thủy sinh Mộc). Hạn chế trắng, ghi (Kim khắc Mộc).',
+  'Thủy': 'Đen, xanh dương, xanh than; trắng – ghi (Kim sinh Thủy). Hạn chế vàng đất, nâu (Thổ khắc Thủy).',
+  'Hỏa': 'Đỏ, cam, hồng, tím; xanh lá – gỗ (Mộc sinh Hỏa). Hạn chế đen, xanh dương (Thủy khắc Hỏa).',
+  'Thổ': 'Vàng, nâu đất, be; đỏ – cam – hồng (Hỏa sinh Thổ). Hạn chế xanh lá (Mộc khắc Thổ).'
+};
+const HOANG = ['Nhất Cát','Nhì Nghi','Tam Địa Sát','Tứ Tấn Tài','Ngũ Thọ Tử','Lục Hoang Ốc'];
+const KIMLAU = {1:'Kim Lâu Thân',3:'Kim Lâu Thê',6:'Kim Lâu Tử',8:'Kim Lâu Lục Súc'};
+const TAMTAI = {0:[2,3,4],1:[11,0,1],2:[8,9,10],3:[5,6,7]};
+const COV = [[90,1],[100,0.9],[200,0.7],[300,0.6],[500,0.5],[1000,0.4]];
+const BUDGETS = [['Dưới 1,5 tỷ',1.5],['1,5 – 2,5 tỷ',2.5],['2,5 – 4 tỷ',4],['4 – 6 tỷ',6],['6 – 10 tỷ',10],['Trên 10 tỷ',0]];
+const ROOMS = ['Phòng khách','Bếp + bàn ăn','Phòng thờ','Phòng ngủ','Phòng ngủ master','WC chung','WC master','Gara ô tô','Kinh doanh','Sinh hoạt chung','Phòng làm việc','Giặt – phơi','Sân thượng','Kho'];
+const FOUND = { 'Móng đơn': [0.3, false], 'Móng băng': [0.5, false], 'Móng ép cọc BTCT': [0.35, true], 'Móng cọc khoan nhồi': [0.35, true], 'Kỹ sư đề xuất': [0.5, false] };
+const STYLES = [
+  {id:'hien-dai',name:'Biệt thự / nhà phố hiện đại',desc:'Khối vuông vức, kính lớn, lam chắn nắng, ít chi tiết – dễ thi công, tối ưu chi phí.',colors:['#F2F2F0','#BFC3C2','#3A3F42','#B98E5E']},
+  {id:'indochine',name:'Indochine (Đông Dương)',desc:'Gạch bông, mây tre, cửa chớp, vòm cong nhẹ – hồn Việt, nét Pháp.',colors:['#F3EBDD','#2F5D50','#C9A66B','#1E1E1E']},
+  {id:'tan-co-dien',name:'Tân cổ điển',desc:'Phào chỉ tiết chế, bố cục đối xứng, sang trọng – hợp biệt thự mặt tiền rộng.',colors:['#FAF7F0','#E4D7BF','#A88B5B','#5B5047']},
+  {id:'lau-dai',name:'Cổ điển / Lâu đài',desc:'Mái vòm, cột thức, phù điêu, phào chỉ dày – bề thế, cần lô đất lớn và ngân sách cao.',colors:['#F6F0E4','#D9C29A','#8E6E3E','#3F3A34']},
+  {id:'nhat',name:'Mái Nhật / Wabi-sabi',desc:'Mái dốc, gỗ sáng màu, tiểu cảnh, ánh sáng dịu – tĩnh và ấm.',colors:['#EFE8DD','#C6A27A','#6B6F5A','#2B2B2B']},
+  {id:'nhiet-doi',name:'Nhiệt đới (Tropical)',desc:'Mái đua sâu, gạch thông gió, nhiều cây xanh – mát tự nhiên, hợp khí hậu Việt Nam.',colors:['#E9E4D6','#8A9A5B','#B5643C','#3E4A3D']},
+  {id:'luxury',name:'Hiện đại sang trọng',desc:'Đá tự nhiên, kim loại, ánh sáng gián tiếp – điểm nhấn cho biệt thự cao cấp.',colors:['#F4F1EC','#1F2326','#C8B08A','#8C8F91']}
+];
+
+function canChiOf(y) { var i = ((y - 4) % 60 + 60) % 60; return CAN[i % 10] + ' ' + CHI[i % 12]; }
+function fmt(n, d) { return Number(n).toLocaleString('vi-VN', { minimumFractionDigits: d, maximumFractionDigits: d }); }
+function numOf(v) { return parseFloat(String(v || '').replace(',', '.')) || 0; }
+function covOf(lot) {
+  if (lot <= 90) return 1;
+  if (lot >= 1000) return 0.4;
+  for (var i = 0; i < COV.length - 1; i++) {
+    var a = COV[i], b = COV[i + 1];
+    if (lot >= a[0] && lot <= b[0]) return a[1] + (b[1] - a[1]) * (lot - a[0]) / (b[0] - a[0]);
+  }
+  return 1;
+}
+function calcFS(yStr, g, byStr) {
+  var y = parseInt(yStr, 10);
+  if (!(y >= 1920 && y <= 2012)) return null;
+  var by = parseInt(byStr, 10) || 2027;
+  var i60 = ((y - 4) % 60 + 60) % 60;
+  var chiI = i60 % 12;
+  var napam = NAPAM[Math.floor(i60 / 2)];
+  var hanh = napam.split(' ').pop();
+  var r = y % 9, c;
+  if (g === 'nu') { c = (r + 4) % 9; if (c === 0) c = 9; if (c === 5) c = 8; }
+  else { c = (11 - r) % 9; if (c === 0) c = 9; if (c === 5) c = 2; }
+  var cu = CUNG[c];
+  var mu = by - y + 1;
+  var kl = KIMLAU[mu % 9] || '';
+  var hoI = (Math.floor(mu / 10) - 1 + mu % 10) % 6;
+  var hoBad = hoI === 2 || hoI === 4 || hoI === 5;
+  var byChi = ((by - 4) % 12 + 12) % 12;
+  var tt = TAMTAI[chiI % 4].indexOf(byChi) >= 0;
+  var faults = [];
+  if (kl) faults.push(kl);
+  if (hoBad) faults.push(HOANG[hoI]);
+  if (tt) faults.push('Tam Tai');
+  return {
+    y: y, by: by, mu: mu, hanh: hanh, cungNo: c, cung: cu[0], cungHanh: cu[1], s: cu[2],
+    canChi: canChiOf(y), byCanChi: canChiOf(by),
+    yearText: y + ' – ' + canChiOf(y) + (g === 'nu' ? ' (nữ)' : ' (nam)'),
+    napam: napam + ' (' + hanh + ')',
+    cungText: cu[0] + ' ' + cu[1],
+    group: EAST.indexOf(c) >= 0 ? 'Đông tứ mệnh' : 'Tây tứ mệnh',
+    goodDirs: [0,1,2,3].map(function (i) { return { star: STARS[i], dir: DN[cu[2][i]] }; }),
+    klText: kl ? 'Phạm ' + kl : 'Không phạm', klCls: kl ? 'tag bad' : 'tag good',
+    hoText: HOANG[hoI], hoCls: hoBad ? 'tag bad' : 'tag good',
+    ttText: tt ? 'Phạm' : 'Không phạm', ttCls: tt ? 'tag bad' : 'tag good',
+    verdict: faults.length
+      ? 'Năm ' + by + ' gia chủ phạm ' + faults.join(', ') + '. Nên mượn tuổi người hợp (nam giới, đẹp tuổi) đứng ra động thổ – cất nóc, hoặc cân nhắc lùi năm khởi công.'
+      : 'Năm ' + by + ' gia chủ đẹp tuổi làm nhà: không phạm Kim Lâu, Hoang Ốc, Tam Tai.',
+    verdictCls: faults.length ? 'note bad' : 'note good'
+  };
+}
+
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 0, submitted: false, err: '', preview: false, notice: '',
+      name: '', phone: '', zalo: '', email: '', addr: '', dob: '', concerns: [],
+      year: '', gender: 'nam', year2: '', gender2: 'nu', buildYear: '2027',
+      siteAddr: '', type: 'Nhà phố', w: '', d: '', road: '', fronts: '1 mặt tiền', facing: '', facingDeg: '', status: 'Đất trống', legal: ['Sổ đỏ / sổ hồng'], permit: 'Cần xin phép – nhờ công ty làm hồ sơ',
+      floors: 4, mezz: 'Không lửng', tum: 'Có tum', basement: 'Không', roof: 'Mái bằng BTCT',
+      sxdIn: '', sudung: '', kichthuoc: '', balc: 'Không đua', balcDua: '', cos: '3 bậc',
+      adults: 2, kids: 2, elders: 0, beds: 4, wcs: 4, cars: 1,
+      floorRooms: { 'Tầng 1': ['Phòng khách', 'Bếp + bàn ăn', 'WC chung'] }, floorNote: {}, floorH: {},
+      altar: 'Tầng trên cùng', kitchen: 'Bếp mở liên thông phòng khách', business: 'Không', well: 'Có giếng trời', lift: 'Không', liftType: 'Kỹ sư đề xuất', spaces: ['Ban công trồng cây'],
+      style: 'hien-dai', colors: '', materials: '', refs: '',
+      doorMain: 'Nhôm hệ', doorRoom: 'Nhựa lõi thép', windowT: 'Nhôm hệ',
+      stair: 'Bản trượt vuông có chiếu nghỉ', stairDir: 'Kỹ sư đề xuất', stairW: '1000', railIn: 'Gỗ – kính', railOut: 'Inox – kính',
+      ceil: 'Trần thạch cao', ceilScope: 'Toàn nhà', floorMat: 'Sàn gạch', tile: '800×800 mm', wallOut: '220 mm', wallIn: '110 mm',
+      soil: 'Đất liền thổ', found: 'Kỹ sư đề xuất', neighbor: '',
+      waterIn: 'Nước máy', waterPos: '', waterOut: 'Trước nhà', drainCos: '', tank: 'Có – sau nhà', septic: 'Trong nhà',
+      pole: 'Trước nhà', ac: ['Phòng ngủ', 'Phòng khách'], vrv: 'Không', solar: 'Để chờ', cam: 'Camera IP', gen: 'Không', sys: ['Chuông cổng', 'Cáp quang internet + truyền hình', 'Chống sét'],
+      budget: '2,5 – 4 tỷ', pkg: 'Trọn gói chìa khóa trao tay', level: 'Khá', start: '3 – 6 tháng', dongtho: '',
+      siteNote: '', files: [],
+      contact: 'Zalo', time: 'Buổi tối', notes: '', agree: false
+    };
+  }
+
+  renderVals() {
+    var self = this, s = this.state, P = this.props;
+    var set = function (o) { self.setState(o); };
+    var on = {};
+    ['name','phone','zalo','email','addr','dob','year','year2','siteAddr','w','d','road','facingDeg','sxdIn','sudung','kichthuoc','balcDua','colors','materials','refs','neighbor','waterPos','drainCos','dongtho','siteNote','notes'].forEach(function (k) {
+      on[k] = function (e) { var o = { err: '' }; o[k] = e.target.value; set(o); };
+    });
+    var one = function (key, opts) {
+      return opts.map(function (o) {
+        var v = typeof o === 'object' ? o.v : o;
+        var label = typeof o === 'object' ? o.label : String(o);
+        var sel = s[key] === v;
+        return { label: label, sub: (typeof o === 'object' && o.sub) || '', cls: 'chip' + (sel ? ' on' : ''), pressed: sel ? 'true' : 'false', pick: function () { var x = {}; x[key] = v; set(x); } };
+      });
+    };
+    var toggle = function (arr, o) { return arr.indexOf(o) >= 0 ? arr.filter(function (z) { return z !== o; }) : arr.concat([o]); };
+    var many = function (key, opts) {
+      return opts.map(function (o) {
+        var sel = s[key].indexOf(o) >= 0;
+        return { label: o, sub: '', cls: 'chip' + (sel ? ' on' : ''), pressed: sel ? 'true' : 'false', pick: function () { var x = {}; x[key] = toggle(s[key], o); set(x); } };
+      });
+    };
+
+    var fs = calcFS(s.year, s.gender, s.buildYear);
+    var fs2 = calcFS(s.year2, s.gender2, s.buildYear);
+
+    var facingIdx = fs && s.facing ? fs.s.indexOf(s.facing) : -1;
+    var facingText = '', facingCls = 'note good';
+    if (facingIdx >= 0) {
+      var good = facingIdx < 4;
+      facingCls = good ? 'note good' : 'note bad';
+      facingText = 'Hướng ' + DN[s.facing] + ' là cung ' + STARS[facingIdx] + (good
+        ? ' – hướng tốt với gia chủ.'
+        : ' – hướng xấu với gia chủ. Kiến trúc sư sẽ xử lý bằng cách xoay cửa chính, bố trí sảnh – cổng theo hướng tốt và đặt bếp “tọa hung hướng cát”.');
+    }
+    var facingHint = fs
+      ? 'Dòng chữ nhỏ dưới mỗi hướng là cung Bát trạch theo tuổi gia chủ (' + fs.cung + ' – ' + fs.group + ').'
+      : 'Nhập năm sinh ở bước 1 để xem hướng nào hợp tuổi.';
+
+    var coupleText = '';
+    if (fs && fs2) {
+      coupleText = 'Vợ/chồng: ' + fs2.yearText + ', cung ' + fs2.cungText + ' – ' + fs2.group + '. ' + (fs.group === fs2.group
+        ? 'Cùng nhóm mệnh nên hướng nhà, hướng bếp dễ hợp cả hai.'
+        : 'Khác nhóm mệnh: hướng nhà theo gia chủ, phòng ngủ và hướng giường bố trí bổ trợ cho người còn lại.');
+    }
+
+    // ---- Dự toán sơ bộ
+    var W = numOf(s.w), D = numOf(s.d), sxdIn = numOf(s.sxdIn);
+    var lot = W * D, cov = covOf(lot);
+    var sxd = sxdIn > 0 ? sxdIn : lot * cov;
+    var roofC = { 'Mái bằng BTCT': 0.5, 'Mái Thái (BTCT dán ngói)': 0.85, 'Mái Nhật (kèo thép lợp ngói)': 0.7, 'Mái tôn': 0.3 }[s.roof] || 0.5;
+    var bC = { 'Không': 0, 'Bán hầm': 1.5, 'Hầm': 2.0 }[s.basement] || 0;
+    var fd = FOUND[s.found] || [0.5, false];
+    var parts = [{ k: s.found === 'Kỹ sư đề xuất' ? 'Móng (tạm tính 50%)' : s.found + ' (' + Math.round(fd[0] * 100) + '%)', a: sxd * fd[0] }, { k: 'Sàn ' + s.floors + ' tầng (100%)', a: sxd * s.floors }];
+    if (s.mezz === 'Có lửng') parts.push({ k: 'Tầng lửng (≈ 60% sàn)', a: sxd * 0.6 });
+    var dua = numOf(s.balcDua);
+    if (s.balc === 'Có đua ban công' && dua > 0 && W > 0 && s.floors > 1) parts.push({ k: 'Ban công đua ' + fmt(dua, 1) + ' m × ' + (s.floors - 1) + ' tầng', a: W * dua * (s.floors - 1) });
+    if (s.tum === 'Có tum') parts.push({ k: 'Tum thang (≈ 50% sàn)', a: sxd * 0.5 });
+    parts.push({ k: s.roof + ' (' + Math.round(roofC * 100) + '%)', a: sxd * roofC });
+    if (bC) parts.push({ k: s.basement + ' (' + Math.round(bC * 100) + '%)', a: sxd * bC });
+    var area = parts.reduce(function (t, p) { return t + p.a; }, 0);
+    var num = function (v, d) { var n = parseFloat(v); return isNaN(n) ? d : n; };
+    var levelPrice = { 'Cơ bản': num(P.priceCoBan, 6.3), 'Khá': num(P.priceKha, 7.5), 'Cao cấp': num(P.priceCaoCap, 9.5) };
+    var price = s.pkg === 'Chỉ thiết kế' ? num(P.designFee, 0.18) : s.pkg === 'Thiết kế + thi công phần thô' ? num(P.priceTho, 4.2) : levelPrice[s.level];
+    var totalTy = area * price / 1000;
+    var bMax = 0; BUDGETS.forEach(function (b) { if (b[0] === s.budget) bMax = b[1]; });
+    var budgetText, budgetCls;
+    if (s.pkg === 'Chỉ thiết kế') { budgetText = 'Chi phí thiết kế. Dự toán thi công sẽ lập kèm hồ sơ thiết kế.'; budgetCls = 'note good'; }
+    else if (!bMax || totalTy <= bMax) { budgetText = 'Phù hợp ngân sách ' + s.budget + '.'; budgetCls = 'note good'; }
+    else { budgetText = 'Vượt ngân sách ' + s.budget + ' khoảng ' + Math.round((totalTy / bMax - 1) * 100) + '%. Có thể giảm 1 tầng, bỏ tum/hầm/lửng hoặc hạ mức hoàn thiện.'; budgetCls = 'note bad'; }
+    var totalText = s.pkg === 'Chỉ thiết kế'
+      ? fmt(area * price, 0) + ' triệu'
+      : (totalTy >= 1 ? '≈ ' + fmt(totalTy, 2) + ' tỷ' : '≈ ' + fmt(area * price, 0) + ' triệu');
+    var excl = 'Chưa gồm: ' + (fd[1] ? 'chi phí ép/khoan cọc (tính theo md cọc), ' : 'cọc (nếu địa chất yếu phải chuyển móng cọc), ') + 'nội thất rời, thiết bị điện lạnh, phí xin phép, phá dỡ nhà cũ. Con số chính xác chỉ có sau khảo sát và bóc khối lượng từ hồ sơ thiết kế.';
+    var est = {
+      lot: lot > 0 ? fmt(lot, 1) + ' m²' : '—', cov: lot > 0 ? fmt(cov * 100, 0) + '%' : '—',
+      sxdLabel: sxdIn > 0 ? 'Diện tích xây dựng / sàn (gia chủ nhập)' : 'Diện tích xây dựng / sàn (theo mật độ)',
+      sxd: fmt(sxd, 1) + ' m²',
+      parts: parts.map(function (p) { return { k: p.k, v: fmt(p.a, 1) + ' m²' }; }),
+      area: fmt(area, 1) + ' m²', price: fmt(price, 2) + ' tr/m²', total: totalText,
+      budgetText: budgetText, budgetCls: budgetCls, excl: excl
+    };
+
+    var suggestBeds = Math.max(1, Math.ceil(s.adults / 2)) + Math.ceil(s.kids / 2) + (s.elders > 0 ? 1 : 0) + 1;
+    var roomHint = 'Gợi ý cho ' + (s.adults + s.kids + s.elders) + ' người: khoảng ' + suggestBeds + ' phòng ngủ (gồm 1 phòng khách) và ' + (suggestBeds + 1) + ' WC.' + (s.elders > 0 ? ' Có người cao tuổi: nên bố trí phòng ngủ ở tầng 1, WC khép kín, sàn chống trơn, cân nhắc thang máy gia đình.' : '');
+
+    // ---- Công năng từng tầng
+    var floorNames = ['Tầng 1'];
+    if (s.mezz === 'Có lửng') floorNames.push('Tầng lửng');
+    for (var i = 2; i <= s.floors; i++) floorNames.push('Tầng ' + i);
+    if (s.tum === 'Có tum') floorNames.push('Tum / sân thượng');
+    var floorsList = floorNames.map(function (nm) {
+      var cur = s.floorRooms[nm] || [];
+      return {
+        name: nm, aria: 'Các phòng ' + nm, noteAria: 'Ghi chú ' + nm,
+        h: s.floorH[nm] || '', hPh: nm === 'Tầng 1' ? '3,6 – 3,9' : nm === 'Tầng lửng' ? '2,7 – 3,0' : '3,3 – 3,6',
+        note: s.floorNote[nm] || '',
+        onH: function (e) { var o = Object.assign({}, s.floorH); o[nm] = e.target.value; set({ floorH: o }); },
+        onNote: function (e) { var o = Object.assign({}, s.floorNote); o[nm] = e.target.value; set({ floorNote: o }); },
+        rooms: ROOMS.map(function (r) {
+          var sel = cur.indexOf(r) >= 0;
+          return { label: r, cls: 'chip' + (sel ? ' on' : ''), pressed: sel ? 'true' : 'false', pick: function () { var o = Object.assign({}, s.floorRooms); o[nm] = toggle(cur, r); set({ floorRooms: o }); } };
+        })
+      };
+    });
+
+    var styleName = '';
+    var styles = STYLES.map(function (st) {
+      var sel = s.style === st.id; if (sel) styleName = st.name;
+      return { name: st.name, desc: st.desc, colors: st.colors, cls: 'stc' + (sel ? ' on' : ''), pressed: sel ? 'true' : 'false', pick: function () { set({ style: st.id }); } };
+    });
+    var colorHint = fs ? 'Màu hợp mệnh ' + fs.hanh + ' của gia chủ: ' + COLORS[fs.hanh] : 'Nhập năm sinh ở bước 1 để xem màu hợp mệnh gia chủ.';
+
+    // ---- Lưu ý kỹ thuật
+    var tn = [];
+    if (s.soil === 'Đất ruộng' || s.soil === 'Đất ao lấp') {
+      tn.push({ t: 'Nền đất yếu (' + s.soil.toLowerCase() + '): cần khoan khảo sát địa chất; nhà từ 3 tầng thường phải dùng móng cọc BTCT. Ao lấp phải vét bùn, đắp cát đầm chặt từng lớp trước khi thi công.', cls: 'note bad' });
+      if (s.found === 'Móng đơn' || s.found === 'Móng băng') tn.push({ t: s.found + ' trên nền yếu có nguy cơ lún lệch, nứt tường – nên để kỹ sư kiểm tra lại phương án móng.', cls: 'note bad' });
+    }
+    if (s.soil === 'Đất đồi') tn.push({ t: 'Đất đồi: kiểm tra độ dốc, kè chống trượt và thoát nước mặt; có thể gặp đá phải khoan phá.', cls: 'note bad' });
+    if (s.cos === '1 bậc') tn.push({ t: 'Cos nền 1 bậc (~15 cm) dễ ngập khi đường nâng cốt sau này; nhà phố thường chọn từ 3 bậc (~45 cm).', cls: 'note bad' });
+    if (s.floors >= 5 && s.lift === 'Không') tn.push({ t: 'Nhà từ 5 tầng nên để sẵn hố thang máy để sau này lắp, tránh đục phá kết cấu.', cls: 'note bad' });
+    if (s.stairW === '900' && (s.floors >= 4 || s.elders > 0)) tn.push({ t: 'Bản thang 900 mm hơi hẹp cho nhà nhiều tầng hoặc có người cao tuổi – nên cân nhắc 1000–1100 mm.', cls: 'note bad' });
+    if (s.septic === 'Trong nhà') tn.push({ t: 'Bể phốt trong nhà: đặt dưới gara/WC tầng 1, có ống thông hơi lên mái, nắp thăm ngoài khu sinh hoạt.', cls: 'note good' });
+    if (s.drainCos && numOf(s.drainCos) < 30) tn.push({ t: 'Rãnh thoát thấp hơn cos nhà dưới 30 cm: độ dốc ống thoát hạn chế, cần nâng cos nền hoặc bố trí hố ga – bơm.', cls: 'note bad' });
+    if (s.solar !== 'Không') tn.push({ t: 'Năng lượng mặt trời: để sẵn ống luồn, vị trí bồn/pin trên mái và tính thêm tải trọng mái.', cls: 'note good' });
+    if (!tn.length) tn.push({ t: 'Chưa có lưu ý đặc biệt – kỹ sư sẽ xác nhận khi khảo sát hiện trạng.', cls: 'note good' });
+
+    var LABELS = ['Chủ nhà & tuổi', 'Khu đất', 'Công năng', 'Kiến trúc & vật liệu', 'Kết cấu & điện nước', 'Ngân sách', 'Mặt bằng & gửi'];
+    var steps = LABELS.map(function (l, i) {
+      return { n: i + 1, label: l, cls: 'stp' + (i === s.step ? ' on' : '') + (i < s.step ? ' done' : ''), cur: i === s.step ? 'step' : 'false', go: function () { set({ step: i, err: '', preview: false }); } };
+    });
+
+    var dt = new Date();
+
+    var ctr = function (key, label, note) {
+      return { label: label, note: note, val: s[key],
+        dec: function () { var x = {}; x[key] = Math.max(0, s[key] - 1); set(x); },
+        inc: function () { var x = {}; x[key] = Math.min(20, s[key] + 1); set(x); },
+        decLabel: 'Giảm ' + label.toLowerCase(), incLabel: 'Tăng ' + label.toLowerCase() };
+    };
+
+    var code = 'KH-' + String(dt.getFullYear()).slice(2) + ('0' + (dt.getMonth() + 1)).slice(-2) + ('0' + dt.getDate()).slice(-2) + '-' + (s.phone.replace(/\D/g, '').slice(-3) || '000');
+    var facingChips = DIRS.map(function (x) { return { v: x[0], label: x[1], sub: fs ? STARS[fs.s.indexOf(x[0])] : '' }; });
+
+    // ---- Nội dung phiếu Word (dùng chung cho xem trước, file .docx và Google Sheet)
+    var dmy = function (iso) { return iso ? iso.split('-').reverse().join('/') : ''; };
+    var R = function (k, v) { return { k: k, v: (v === undefined || v === null || v === '') ? '—' : String(v) }; };
+    var floorRows = floorNames.map(function (nm) {
+      var parts2 = [(s.floorRooms[nm] || []).join(', ')];
+      if (s.floorH[nm]) parts2.push('Cao tầng ' + s.floorH[nm] + ' m');
+      if (s.floorNote[nm]) parts2.push('Ghi chú: ' + s.floorNote[nm]);
+      return R('Công năng ' + nm.toLowerCase(), parts2.filter(Boolean).join('\n'));
+    });
+    var doc = {
+      code: code,
+      fileName: 'Phieu_khao_sat_' + code + '.docx',
+      dateLine: 'Ngày ' + dt.getDate() + ' tháng ' + (dt.getMonth() + 1) + ' năm ' + dt.getFullYear(),
+      sections: [
+        { title: 'I. THÔNG TIN CHỦ NHÀ', rows: [
+          R('Tên gia chủ', s.name), R('Số điện thoại', s.phone), R('Zalo', s.zalo), R('Email', s.email),
+          R('Ngày sinh (dương lịch)', dmy(s.dob)), R('Năm sinh âm lịch', fs ? fs.yearText : s.year), R('Vợ/chồng', fs2 ? fs2.yearText : ''),
+          R('Địa chỉ liên hệ', s.addr), R('Vấn đề quan tâm nhất', s.concerns.join(', ')),
+          R('Mệnh – cung phi', fs ? fs.napam + '; cung ' + fs.cungText + ' – ' + fs.group : ''),
+          R('Hướng hợp tuổi', fs ? fs.goodDirs.map(function (g) { return g.star + ': ' + g.dir; }).join('; ') : ''),
+          R('Tuổi làm nhà', fs ? 'Tuổi mụ ' + fs.mu + ' năm ' + fs.by + ' (' + fs.byCanChi + '). ' + fs.verdict : '')
+        ] },
+        { title: 'II. THÔNG TIN KIẾN TRÚC CÔNG TRÌNH', rows: [
+          R('Kiểu công trình', s.type), R('Phong cách kiến trúc', styleName), R('Địa chỉ lô đất', s.siteAddr),
+          R('Kích thước lô đất', lot ? fmt(W, 1) + ' × ' + fmt(D, 1) + ' m = ' + fmt(lot, 1) + ' m²' : ''),
+          R('Đường trước nhà', s.road ? s.road + ' m' : ''), R('Số mặt tiền', s.fronts),
+          R('Hướng mặt tiền', s.facing ? DN[s.facing] + (s.facingDeg ? ' (' + s.facingDeg + ')' : '') + (facingIdx >= 0 ? ' – cung ' + STARS[facingIdx] : '') : ''),
+          R('Hiện trạng', s.status), R('Giấy tờ đã có', s.legal.join(', ')), R('Xin phép xây dựng', s.permit),
+          R('Quy mô', s.floors + ' tầng' + (s.mezz === 'Có lửng' ? ' + lửng' : '') + (s.tum === 'Có tum' ? ' + tum' : '') + (s.basement !== 'Không' ? ' + ' + s.basement.toLowerCase() : '')),
+          R('Kiểu mái', s.roof),
+          R('Diện tích xây dựng ước tính/sàn', sxdIn > 0 ? fmt(sxdIn, 1) + ' m²' : (sxd > 0 ? fmt(sxd, 1) + ' m² (tự tính theo mật độ)' : '')),
+          R('Diện tích sử dụng ước tính/sàn', s.sudung ? s.sudung + ' m²' : ''), R('Kích thước xây dựng', s.kichthuoc),
+          R('Đua ban công', s.balc + (s.balc === 'Có đua ban công' && s.balcDua ? ' ' + s.balcDua + ' m' : '')),
+          R('Cos nền tầng 1 so với sân', s.cos),
+          R('Thành viên', s.adults + ' người lớn, ' + s.kids + ' trẻ em, ' + s.elders + ' người cao tuổi'),
+          R('Số phòng mong muốn', s.beds + ' phòng ngủ, ' + s.wcs + ' WC, ' + s.cars + ' chỗ để ô tô')
+        ].concat(floorRows).concat([
+          R('Phòng thờ', s.altar), R('Bếp', s.kitchen), R('Giếng trời', s.well), R('Kinh doanh tầng 1', s.business),
+          R('Thang máy', s.lift === 'Có' ? 'Có – ' + s.liftType : s.lift), R('Không gian khác', s.spaces.join(', ')),
+          R('Màu sắc yêu cầu', s.colors), R('Mẫu nhà tham khảo', s.refs),
+          R('Cửa đi chính', s.doorMain), R('Cửa thông phòng', s.doorRoom), R('Cửa sổ', s.windowT),
+          R('Cầu thang bộ', s.stair + '; chiều: ' + s.stairDir.toLowerCase() + '; bản rộng: ' + (s.stairW === 'Kỹ sư đề xuất' ? 'theo phương án' : s.stairW + ' mm')),
+          R('Tay vịn cầu thang trong nhà', s.railIn), R('Lan can ngoài trời', s.railOut),
+          R('Trần trang trí', s.ceil + (s.ceil !== 'Không làm trần' ? ' – ' + s.ceilScope.toLowerCase() : '')),
+          R('Sàn nhà', s.floorMat + (s.floorMat === 'Sàn gạch' ? ' ' + s.tile : '')),
+          R('Tường bao / tường ngăn', s.wallOut + ' / ' + s.wallIn), R('Vật liệu khác', s.materials)
+        ]) },
+        { title: 'III. THÔNG TIN KẾT CẤU', rows: [
+          R('Địa chất khu đất', s.soil), R('Phương án móng dự kiến', s.found), R('Công trình lân cận', s.neighbor)
+        ] },
+        { title: 'IV. THÔNG TIN ĐIỆN NƯỚC', rows: [
+          R('Nguồn nước đầu vào', s.waterIn + (s.waterPos ? '; đầu chờ: ' + s.waterPos : '')),
+          R('Thoát nước', s.waterOut + (s.drainCos ? '; rãnh thấp hơn cos nhà ' + s.drainCos + ' cm' : '')),
+          R('Bể nước ngầm', s.tank), R('Bể phốt', s.septic), R('Cột điện', s.pole),
+          R('Điều hòa cục bộ', s.ac.length ? s.ac.join(', ') : 'Không'), R('Điều hòa trung tâm', s.vrv),
+          R('Năng lượng mặt trời', s.solar), R('Camera an ninh', s.cam), R('Máy phát điện', s.gen),
+          R('Hệ thống khác', s.sys.join(', '))
+        ] },
+        { title: 'V. NGÂN SÁCH & TIẾN ĐỘ', rows: [
+          R('Tổng mức đầu tư tối đa', s.budget + ' (gồm cửa, thiết bị, sơn; chưa gồm nội thất)'),
+          R('Gói dịch vụ', s.pkg + (s.pkg === 'Trọn gói chìa khóa trao tay' ? ' – hoàn thiện ' + s.level.toLowerCase() : '')),
+          R('Thời điểm khởi công', s.start), R('Ngày dự kiến động thổ', dmy(s.dongtho)),
+          R('Diện tích sàn tính tiền (sơ bộ)', sxd > 0 ? est.area : ''),
+          R('Dự toán sơ bộ', sxd > 0 ? est.total + ' (đơn giá ' + est.price + ', tham khảo)' : '')
+        ] },
+        { title: 'VI. TỔNG MẶT BẰNG & GHI CHÚ', rows: [
+          R('Mô tả tổng mặt bằng', s.siteNote), R('Tệp đính kèm', s.files.join(', ')),
+          R('Ghi chú thêm', s.notes), R('Liên hệ qua', s.contact + ' – ' + s.time.toLowerCase())
+        ] }
+      ]
+    };
+
+    return {
+      f: s, on: on, steps: steps, code: code, err: s.err, hasErr: !!s.err,
+      submitted: s.submitted, form: !s.submitted && !s.preview, preview: !s.submitted && s.preview,
+      doc: doc, notice: s.notice, hasNotice: !!s.notice, mailNote: s.email ? ', bản sao gửi về ' + s.email : '',
+      s0: s.step === 0, s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5, s6: s.step === 6,
+      isFirst: s.step === 0, notFirst: s.step > 0, isLast: s.step === 6, notLast: s.step < 6,
+      prev: function () { set({ step: Math.max(0, s.step - 1), err: '' }); },
+      next: function () { set({ step: Math.min(6, s.step + 1), err: '' }); },
+      openPreview: function () {
+        if (!s.name.trim() || !s.phone.trim()) { set({ err: 'Vui lòng nhập họ tên và số điện thoại ở bước 1.' }); return; }
+        if (!s.agree) { set({ err: 'Vui lòng tích đồng ý cho phép xử lý thông tin để kỹ sư liên hệ tư vấn.' }); return; }
+        set({ preview: true, err: '', notice: '' });
+      },
+      closePreview: function () { set({ preview: false, notice: '' }); },
+      downloadWord: function () { set({ notice: 'Bản thiết kế trên canvas không tải file được – nút này hoạt động ở bản form triển khai.' }); },
+      submit: function () { set({ submitted: true, preview: false, notice: '' }); },
+      edit: function () { set({ submitted: false, preview: false, step: 0 }); },
+      toggleAgree: function () { set({ agree: !s.agree, err: '' }); },
+      onFiles: function (e) { var fl = e.target.files ? Array.prototype.map.call(e.target.files, function (x) { return x.name; }) : []; set({ files: fl }); },
+      fileText: s.files.length ? 'Đã chọn ' + s.files.length + ' tệp: ' + s.files.join(', ') : 'Ảnh (JPG, PNG) hoặc PDF – có thể chọn nhiều tệp',
+
+      concernChips: many('concerns', ['Chi phí', 'Thẩm mỹ', 'Phong thủy', 'Nhu cầu sử dụng']),
+      genderChips: one('gender', [{ v: 'nam', label: 'Nam' }, { v: 'nu', label: 'Nữ' }]),
+      gender2Chips: one('gender2', [{ v: 'nam', label: 'Nam' }, { v: 'nu', label: 'Nữ' }]),
+      yearChips: one('buildYear', ['2026', '2027', '2028'].map(function (y) { return { v: y, label: 'Năm ' + y, sub: canChiOf(parseInt(y, 10)) }; })),
+      typeChips: one('type', ['Nhà phố', 'Nhà ống', 'Shophouse', 'Biệt thự', 'Nhà vườn', 'Nhà cấp 4', 'Lâu đài', 'Khác']),
+      frontChips: one('fronts', ['1 mặt tiền', '2 mặt tiền (lô góc)', '3 mặt thoáng']),
+      facingChips: one('facing', facingChips),
+      facingHint: facingHint,
+      statusChips: one('status', ['Đất trống', 'Có nhà cũ cần phá dỡ', 'Cải tạo / nâng tầng']),
+      legalChips: many('legal', ['Sổ đỏ / sổ hồng', 'Thông tin quy hoạch', 'Giấy phép xây dựng']),
+      permitChips: one('permit', ['Cần xin phép – nhờ công ty làm hồ sơ', 'Cần xin phép – tự làm', 'Không cần / chưa rõ']),
+      floorChips: one('floors', [1, 2, 3, 4, 5, 6].map(function (n) { return { v: n, label: n + ' tầng' }; })),
+      mezzChips: one('mezz', ['Không lửng', 'Có lửng']),
+      tumChips: one('tum', ['Có tum', 'Không tum']),
+      basementChips: one('basement', ['Không', 'Bán hầm', 'Hầm']),
+      roofChips: one('roof', ['Mái bằng BTCT', 'Mái Thái (BTCT dán ngói)', 'Mái Nhật (kèo thép lợp ngói)', 'Mái tôn']),
+      sxdPh: lot > 0 ? 'Tự tính: ' + fmt(lot * cov, 1) : 'VD: 85',
+      balcChips: one('balc', ['Không đua', 'Có đua ban công']), hasBalc: s.balc === 'Có đua ban công',
+      cosChips: one('cos', [{ v: '1 bậc', label: '1 bậc', sub: '~15 cm' }, { v: '3 bậc', label: '3 bậc', sub: '~45 cm' }, { v: '5 bậc', label: '5 bậc', sub: '~75 cm' }, { v: 'Khác', label: 'Khác', sub: 'theo khảo sát' }]),
+      counters: [ctr('adults', 'Người lớn', 'Kể cả vợ chồng'), ctr('kids', 'Trẻ em', 'Dưới 18 tuổi'), ctr('elders', 'Người cao tuổi', 'Ông bà ở cùng'), ctr('beds', 'Phòng ngủ', 'Mong muốn'), ctr('wcs', 'WC', 'Mong muốn'), ctr('cars', 'Chỗ để ô tô', 'Trong nhà')],
+      roomHint: roomHint, floorsList: floorsList,
+      altarChips: one('altar', ['Tầng trên cùng', 'Phòng thờ riêng', 'Kết hợp phòng khách', 'Không cần']),
+      kitchenChips: one('kitchen', ['Bếp mở liên thông phòng khách', 'Bếp kín riêng', 'Bếp có đảo']),
+      wellChips: one('well', ['Có giếng trời', 'Không', 'Kỹ sư đề xuất']),
+      bizChips: one('business', ['Không', 'Cho thuê mặt bằng', 'Tự kinh doanh']),
+      liftChips: one('lift', ['Không', 'Có', 'Để chờ hố thang']), hasLift: s.lift === 'Có',
+      liftTypeChips: one('liftType', ['Có phòng máy', 'Không phòng máy (MRL)', 'Thủy lực', 'Kỹ sư đề xuất']),
+      spaceChips: many('spaces', ['Phòng làm việc', 'Phòng gym', 'Phòng giải trí / karaoke', 'Phòng giúp việc', 'Sân vườn', 'Hồ bơi', 'Ban công trồng cây', 'Kho']),
+      styles: styles, colorHint: colorHint,
+      doorMainChips: one('doorMain', ['Cửa gỗ', 'Thép vân gỗ', 'Nhôm hệ', 'Kính cường lực', 'Khác']),
+      doorRoomChips: one('doorRoom', ['Cửa gỗ', 'Nhựa lõi thép', 'Nhôm hệ', 'Nhựa vân gỗ', 'Khác']),
+      windowChips: one('windowT', ['Cửa gỗ', 'Thép vân gỗ', 'Nhôm hệ', 'Khác']),
+      stairChips: one('stair', ['Bản trượt vuông có chiếu nghỉ', 'Bản cong lượn', 'Bản trượt áp sát tường', 'Khác']),
+      stairDirChips: one('stairDir', ['Xuôi kim đồng hồ', 'Ngược kim đồng hồ', 'Kỹ sư đề xuất']),
+      stairWChips: one('stairW', [{ v: '900', label: '900' }, { v: '1000', label: '1000' }, { v: '1100', label: '1100' }, { v: '1200', label: '1200' }, { v: 'Kỹ sư đề xuất', label: 'Theo P/A' }]),
+      railInChips: one('railIn', ['Gỗ – kính', 'Lan can sắt', 'Gỗ con tiện', 'Sắt nghệ thuật', 'Khác']),
+      railOutChips: one('railOut', ['Inox', 'Inox – kính', 'Sắt nghệ thuật', 'Thép / gang đúc', 'Khác']),
+      ceilChips: one('ceil', ['Trần thạch cao', 'Trần gỗ', 'Trần BT đắp phào chỉ', 'Không làm trần']), hasCeil: s.ceil !== 'Không làm trần',
+      ceilScopeChips: one('ceilScope', ['Phòng khách', 'Toàn nhà']),
+      floorMatChips: one('floorMat', ['Sàn gạch', 'Sàn gỗ', 'Sàn nhựa SPC']), isTile: s.floorMat === 'Sàn gạch',
+      tileChips: one('tile', ['600×600 mm', '800×800 mm', '600×1200 mm', 'Khác']),
+      wallOutChips: one('wallOut', ['220 mm', '110 mm', 'Khác']),
+      wallInChips: one('wallIn', ['220 mm', '110 mm', 'Khác']),
+      soilChips: one('soil', ['Đất liền thổ', 'Đất ruộng', 'Đất ao lấp', 'Đất đồi', 'Chưa rõ']),
+      foundChips: one('found', ['Móng đơn', 'Móng băng', 'Móng ép cọc BTCT', 'Móng cọc khoan nhồi', 'Kỹ sư đề xuất']),
+      waterInChips: one('waterIn', ['Nước máy', 'Nước máy + giếng khoan', 'Giếng khoan']),
+      waterOutChips: one('waterOut', ['Trước nhà', 'Sau nhà', 'Hông nhà']),
+      tankChips: one('tank', ['Có – trước nhà', 'Có – sau nhà', 'Có – vị trí khác', 'Không']),
+      septicChips: one('septic', ['Trong nhà', 'Ngoài nhà', 'Tận dụng bể cũ', 'Kỹ sư đề xuất']),
+      poleChips: one('pole', ['Trước nhà', 'Hông nhà', 'Sau nhà', 'Khác']),
+      acChips: many('ac', ['Phòng ngủ', 'Phòng khách', 'Phòng bếp', 'Để chờ tất cả các phòng']),
+      vrvChips: one('vrv', ['Có', 'Không']),
+      solarChips: one('solar', ['Có', 'Để chờ', 'Không']),
+      camChips: one('cam', ['Camera IP', 'Camera Analog', 'Không']),
+      genChips: one('gen', ['Có', 'Không']),
+      sysChips: many('sys', ['Chuông cổng', 'Cáp quang internet + truyền hình', 'Chống sét', 'Khóa cửa thông minh', 'Nhà thông minh (smarthome)']),
+      budgetChips: one('budget', BUDGETS.map(function (b) { return b[0]; })),
+      pkgChips: one('pkg', ['Chỉ thiết kế', 'Thiết kế + thi công phần thô', 'Trọn gói chìa khóa trao tay']),
+      showLevel: s.pkg === 'Trọn gói chìa khóa trao tay',
+      levelChips: one('level', [{ v: 'Cơ bản', label: 'Cơ bản', sub: fmt(levelPrice['Cơ bản'], 1) + ' tr/m²' }, { v: 'Khá', label: 'Khá', sub: fmt(levelPrice['Khá'], 1) + ' tr/m²' }, { v: 'Cao cấp', label: 'Cao cấp', sub: fmt(levelPrice['Cao cấp'], 1) + ' tr/m²' }]),
+      startChips: one('start', ['Trong 3 tháng', '3 – 6 tháng', '6 – 12 tháng', 'Chưa xác định']),
+      contactChips: one('contact', ['Gọi điện', 'Zalo', 'Email']),
+      timeChips: one('time', ['Giờ hành chính', 'Buổi tối', 'Cuối tuần']),
+      techNotes: tn,
+
+      fs: fs || { goodDirs: [] }, hasFs: !!fs, noFs: !fs, hasFs2: !!(fs && fs2), coupleText: coupleText,
+      hasFacing: facingIdx >= 0, facingText: facingText, facingCls: facingCls,
+      est: est, hasLot: sxd > 0, noLot: !(sxd > 0),
+      process: [
+        { n: 1, t: 'Kỹ sư gọi lại tư vấn, xem tuổi và hướng chi tiết.' },
+        { n: 2, t: 'Khảo sát hiện trạng, đo đạc lô đất, kiểm tra quy hoạch và địa chất.' },
+        { n: 3, t: 'Lên phương án mặt bằng công năng và phối cảnh 3D.' },
+        { n: 4, t: 'Triển khai hồ sơ kiến trúc – kết cấu – điện nước, hồ sơ xin phép.' },
+        { n: 5, t: 'Dự toán chi tiết theo BOQ, ký hợp đồng thi công trọn gói.' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
