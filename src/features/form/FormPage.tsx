@@ -113,6 +113,11 @@ export default function FormPage() {
       if (r.ok) {
         setResult(r);
         clearDraft();
+        try {
+          localStorage.setItem('khao_sat_submitted_lead', r.code);
+        } catch {
+          // ignore
+        }
         setView('done');
       } else {
         setSendErr(r.error ?? 'Không gửi được.');
@@ -171,6 +176,58 @@ export default function FormPage() {
                     ? ' Phiếu thông tin (file Word) đã được gửi tới kỹ sư' + (form.email ? ', bản sao gửi về ' + form.email : '') + '.'
                     : ' Hồ sơ đã được lưu, kỹ sư sẽ xem trên hệ thống quản lý.'}
                 </p>
+
+                {/* Khối Mở khóa Hồ sơ thiết kế mẫu dành riêng cho khách sau khi gửi */}
+                <div style={{
+                  background: 'linear-gradient(135deg, #E8F5E9 0%, #C8E6C9 100%)',
+                  border: '1.5px solid #81C784',
+                  borderRadius: 14,
+                  padding: '20px 24px',
+                  margin: '18px 0',
+                  textAlign: 'left'
+                }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8, flexWrap: 'wrap' }}>
+                    <span style={{
+                      background: '#2E7D32',
+                      color: '#fff',
+                      fontSize: 11,
+                      fontWeight: 700,
+                      padding: '2px 8px',
+                      borderRadius: 4,
+                      textTransform: 'uppercase'
+                    }}>
+                      Đặc quyền khách hàng đã nộp phiếu
+                    </span>
+                    <span style={{ fontSize: 13, fontWeight: 700, color: '#1B5E20' }}>
+                      🎁 ĐÃ MỞ KHÓA BỘ HỒ SƠ THIẾT KẾ MẪU
+                    </span>
+                  </div>
+                  <h3 style={{ fontSize: 18, margin: '0 0 6px', color: '#1B5E20' }}>
+                    Trọn bộ 35 Bản vẽ Kỹ thuật thi công & Phối cảnh 3D Gemini AI
+                  </h3>
+                  <p style={{ margin: '0 0 16px', fontSize: 13.5, color: '#2E7D32', lineHeight: 1.5 }}>
+                    Dành riêng cho anh/chị tham khảo: Bản vẽ kết cấu chi tiết từ móng cọc, đài giằng, khung cột, dầm sàn đến hệ vì kèo mái Nhật, kèm các góc phối cảnh 3D kiến trúc thực tế tạo từ mặt bằng.
+                  </p>
+                  <a
+                    href={`#/ho-so-mau?lead=${result.code}`}
+                    className="btn"
+                    style={{
+                      background: '#1B5E20',
+                      color: '#fff',
+                      borderColor: '#1B5E20',
+                      textDecoration: 'none',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 8,
+                      minHeight: 44,
+                      fontSize: 14,
+                      fontWeight: 600
+                    }}
+                  >
+                    <span>📂</span>
+                    <span>Mở xem Hồ sơ thiết kế & Phối cảnh 3D mẫu ngay →</span>
+                  </a>
+                </div>
 
                 {/* Khối chia sẻ và mã QR hồ sơ */}
                 <div style={{

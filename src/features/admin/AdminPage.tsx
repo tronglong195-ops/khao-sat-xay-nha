@@ -13,6 +13,7 @@ import { Note } from '../../components/ui';
 import { auth, isFirebaseConfigured } from '../../services/firebase';
 import { checkAdminDetails, type AdminCheckResult } from '../../services/leads';
 import { LeadsView } from './LeadsView';
+import { SampleDossierManager } from './SampleDossierManager';
 
 type AuthState =
   | { phase: 'loading'; message?: string }
@@ -57,6 +58,7 @@ export default function AdminPage() {
   const [st, setSt] = useState<AuthState>({ phase: 'loading', message: 'Đang kiểm tra trạng thái đăng nhập…' });
   const [err, setErr] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [adminTab, setAdminTab] = useState<'leads' | 'sample'>('leads');
 
   // Kiểm tra quyền admin của user
   const verifyUser = useCallback(async (user: User) => {
@@ -267,7 +269,54 @@ export default function AdminPage() {
       </div>
     );
   } else {
-    body = <LeadsView email={st.user.email ?? ''} onSignOut={() => signOut(auth())} />;
+    body = (
+      <div className="stack" style={{ gap: 20 }}>
+        <div style={{
+          display: 'flex',
+          gap: 10,
+          borderBottom: '2px solid var(--line)',
+          paddingBottom: 4,
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          flexWrap: 'wrap'
+        }}>
+          <div style={{ display: 'flex', gap: 8 }}>
+            <button
+              type="button"
+              className={'btn ' + (adminTab === 'leads' ? '' : 'ghost')}
+              style={{ minHeight: 38, fontSize: 13.5 }}
+              onClick={() => setAdminTab('leads')}
+            >
+              👥 Danh sách Khách hàng ({st.user.email})
+            </button>
+            <button
+              type="button"
+              className={'btn ' + (adminTab === 'sample' ? '' : 'ghost')}
+              style={{ minHeight: 38, fontSize: 13.5 }}
+              onClick={() => setAdminTab('sample')}
+            >
+              📁 Quản lý Hồ sơ mẫu & Phối cảnh 3D
+            </button>
+          </div>
+
+          <a
+            href="#/ho-so-mau"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn ghost sm"
+            style={{ textDecoration: 'none', fontSize: 12.5 }}
+          >
+            👁️ Xem trước giao diện Khách ↗
+          </a>
+        </div>
+
+        {adminTab === 'leads' ? (
+          <LeadsView email={st.user.email ?? ''} onSignOut={() => signOut(auth())} />
+        ) : (
+          <SampleDossierManager onBack={() => setAdminTab('leads')} />
+        )}
+      </div>
+    );
   }
 
   return (

@@ -43,9 +43,14 @@ service cloud.firestore {
         && request.resource.data.status in ['moi', 'da_lien_he', 'hen_khao_sat', 'da_khao_sat', 'bao_gia', 'ky_hd', 'tu_choi'];
     }
 
-    match /config/{doc} {
+    match /config/admins {
       allow read: if isAdmin();
       allow write: if false;
+    }
+
+    match /config/sampleDossier {
+      allow read: if true;
+      allow write: if isAdmin();
     }
   }
 }

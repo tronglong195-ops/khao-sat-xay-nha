@@ -60,6 +60,12 @@ describe('leads — khách vãng lai', () => {
     await assertFails(getDoc(doc(anon(), 'config/admins')));
     await assertFails(getDoc(doc(stranger(), 'config/admins')));
   });
+  it('ai cũng đọc được hồ sơ mẫu nhưng chỉ admin mới được ghi', async () => {
+    await assertSucceeds(getDoc(doc(anon(), 'config/sampleDossier')));
+    await assertFails(setDoc(doc(anon(), 'config/sampleDossier'), { title: 'hack' }));
+    await assertFails(setDoc(doc(stranger(), 'config/sampleDossier'), { title: 'hack' }));
+    await assertSucceeds(setDoc(doc(admin(), 'config/sampleDossier'), { title: 'Hồ sơ chuẩn' }));
+  });
 });
 
 describe('leads — quản trị', () => {
