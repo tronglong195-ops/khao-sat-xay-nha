@@ -63,15 +63,48 @@ export async function createLead(input: LeadInput): Promise<string> {
   return code;
 }
 
-export async function isAdmin(email: string | null | undefined): Promise<boolean> {
-  if (!email) return false;
+export interface AdminCheckResult {
+  ok: boolean;
+  code?: string;
+  message?: string;
+  emails?: string[];
+}
+
+export async function checkAdminDetails(email: string | null | undefined): Promise<AdminCheckResult> {
+  if (!email) return { ok: false, message: 'Chưa có email tài khoản đăng nhập.' };
   try {
     const snap = await getDoc(doc(db(), 'config', 'admins'));
-    const emails = (snap.data()?.emails ?? []) as string[];
-    return emails.includes(email);
-  } catch {
-    return false;
+    if (!snap.exists()) {
+      return {
+        ok: false,
+        code: 'not-found',
+        message: 'Chưa tìm thấy document "config/admins" trong Cloud Firestore.'
+      };
+    }
+    const rawEmails = (snap.data()?.emails ?? []) as string[];
+    const normalized = rawEmails.map((e) => String(e).toLowerCase().trim());
+    if (normalized.includes(email.toLowerCase().trim())) {
+      return { ok: true, emails: rawEmails };
+    }
+    return {
+      ok: false,
+      code: 'not-in-list',
+      message: `Email "${email}" chưa nằm trong mảng emails của document "config/admins".`,
+      emails: rawEmails
+    };
+  } catch (err) {
+    const code = (err as { code?: string })?.code || 'unknown';
+    return {
+      ok: false,
+      code,
+      message: `Không thể kiểm tra quyền quản trị từ Firestore (${code}): ${(err as Error)?.message || String(err)}`
+    };
   }
+}
+
+export async function isAdmin(email: string | null | undefined): Promise<boolean> {
+  const res = await checkAdminDetails(email);
+  return res.ok;
 }
 
 export async function listLeads(max = 1000): Promise<Lead[]> {
