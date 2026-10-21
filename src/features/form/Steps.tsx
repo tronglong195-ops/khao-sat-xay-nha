@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { FoundationIcon, RoofIcon, TechTip } from '../../components/ArchitectureVisuals';
+import { BuildingPerspectivesSlider } from '../../components/BuildingPerspectivesSlider';
 import { FengShuiCompass } from '../../components/FengShuiCompass';
 import { Counter, MultiChipGroup, Note, Sec } from '../../components/ui';
 import { COMPANY } from '../../config/company';
@@ -168,6 +169,20 @@ export function Step2() {
       <StepHead title="2. Khu đất & pháp lý" hint="Kích thước lô đất cho phép tính mật độ xây dựng và diện tích sàn sơ bộ." />
       <Input k="siteAddr" label="Địa chỉ lô đất xây dựng" placeholder="Số thửa/tờ bản đồ, đường, phường/xã, tỉnh/thành" />
       <One k="type" title="Kiểu công trình" opts={OPTS.type} />
+
+      {/* Slide ảnh phối cảnh minh họa các góc công trình vuốt sang hai bên */}
+      <BuildingPerspectivesSlider
+        buildingType={f.type}
+        savedRef={f.refs}
+        onSaveRef={(refText: string) => {
+          const current = f.refs ? f.refs.trim() : '';
+          if (!current) {
+            set({ refs: refText });
+          } else if (!current.includes(refText)) {
+            set({ refs: current + ' ; ' + refText });
+          }
+        }}
+      />
       <div className="grid3">
         <Input k="w" label="Chiều rộng mặt tiền (m)" type="number" inputMode="decimal" step="0.1" placeholder="VD: 5" />
         <Input k="d" label="Chiều sâu lô đất (m)" type="number" inputMode="decimal" step="0.1" placeholder="VD: 20" />
