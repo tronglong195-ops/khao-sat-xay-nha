@@ -10,7 +10,7 @@
     "lint": "eslint .",
     "test": "vitest",
     "test:e2e": "playwright test",
-    "test:rules": "firebase emulators:exec --only firestore \"vitest run --config vitest.rules.config.ts\""
+    "test:rules": "npx --yes firebase-tools@14 emulators:exec --project demo-khao-sat --only firestore \"vitest run --config vitest.rules.config.ts\""
   },
   "dependencies": {
     "docx": "^9.0.0",

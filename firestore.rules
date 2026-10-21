@@ -1,0 +1,51 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{db}/documents {
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email_verified == true
+        && exists(/databases/$(db)/documents/config/admins)
+        && request.auth.token.email in get(/databases/$(db)/documents/config/admins).data.emails;
+    }
+
+    function str(v, max) {
+      return v is string && v.size() <= max;
+    }
+
+    // Hồ sơ khách mới (khách vãng lai, không đăng nhập)
+    function validNewLead(d) {
+      return d.keys().hasAll(['code', 'createdAt', 'status', 'name', 'phone', 'notify', 'form', 'sections'])
+        && d.keys().hasOnly([
+          'code', 'createdAt', 'status', 'name', 'phone', 'email', 'contact', 'time', 'type', 'floors', 'budget', 'pkg',
+          'siteAddr', 'estimateText', 'estimateTy', 'fengShui', 'form', 'sections', 'fileNames', 'notify', 'source'])
+        && d.status == 'moi'
+        && d.createdAt == request.time
+        && str(d.code, 40) && d.code.matches('^KH-[0-9]{6}-[0-9]{3}(-[A-Z0-9]{4})?$')
+        && d.name is string && d.name.size() > 0 && d.name.size() < 120
+        && d.phone is string && d.phone.matches('^(0|\\+84)[0-9]{9,10}$')
+        && (!('email' in d) || str(d.email, 200))
+        && (!('floors' in d) || (d.floors is int && d.floors >= 1 && d.floors <= 6))
+        && (!('estimateTy' in d) || d.estimateTy == null || d.estimateTy is number)
+        && (!('fengShui' in d) || d.fengShui == null || d.fengShui is map)
+        && (!('fileNames' in d) || (d.fileNames is list && d.fileNames.size() <= 8))
+        && d.form is map
+        && d.sections is list && d.sections.size() == 6
+        && d.notify is map && d.notify.status in ['sent', 'failed'];
+    }
+
+    match /leads/{id} {
+      // Mã hồ sơ là ID: ghi đè hồ sơ có sẵn bị coi là update → khách bị từ chối
+      allow create: if id == request.resource.data.code && validNewLead(request.resource.data);
+      allow read, delete: if isAdmin();
+      // Admin chỉ được sửa trường quản lý
+      allow update: if isAdmin()
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'statusLog', 'adminNote', 'updatedAt'])
+        && request.resource.data.status in ['moi', 'da_lien_he', 'hen_khao_sat', 'da_khao_sat', 'bao_gia', 'ky_hd', 'tu_choi'];
+    }
+
+    match /config/{doc} {
+      allow read: if isAdmin();
+      allow write: if false;
+    }
+  }
+}
