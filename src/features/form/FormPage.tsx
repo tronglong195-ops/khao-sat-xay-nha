@@ -271,7 +271,7 @@ export default function FormPage() {
           </FormContext.Provider>
         </main>
 
-        <Sidebar fs={fs} couple={coupleText(fs, fs2)} facing={facingNote(fs, form.facing)} est={est} notes={notes} />
+        <Sidebar fs={fs} couple={coupleText(fs, fs2)} facing={facingNote(fs, form.facing)} est={est} notes={notes} currentStep={step} />
       </div>
     </Page>
   );

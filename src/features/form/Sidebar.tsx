@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react';
+import { TipsLibraryModal } from '../../components/TipsLibraryModal';
 import { Note, Row, Tag } from '../../components/ui';
+import { getRandomTipsForStep, type ConstructionTip } from '../../domain/constructionTips';
 import type { Estimate } from '../../domain/estimate';
 import type { FengShui } from '../../domain/fengshui';
 import { PROCESS } from '../../domain/options';
@@ -10,9 +13,22 @@ interface Props {
   facing: { text: string; bad: boolean } | null;
   est: Estimate;
   notes: TechNote[];
+  currentStep?: number;
 }
 
-export function Sidebar({ fs, couple, facing, est, notes }: Props) {
+export function Sidebar({ fs, couple, facing, est, notes, currentStep = 0 }: Props) {
+  const [randomTips, setRandomTips] = useState<ConstructionTip[]>([]);
+  const [showModal, setShowModal] = useState(false);
+
+  // Đổi các lưu ý kỹ thuật ngẫu nhiên khi người dùng chuyển bước
+  useEffect(() => {
+    setRandomTips(getRandomTipsForStep(currentStep, 2));
+  }, [currentStep]);
+
+  const rollNewTips = () => {
+    setRandomTips(getRandomTipsForStep(currentStep, 2, randomTips.map((t) => t.id)));
+  };
+
   return (
     <aside className="side" aria-label="Kết quả sơ bộ">
       <section className="card">
@@ -106,9 +122,68 @@ export function Sidebar({ fs, couple, facing, est, notes }: Props) {
         <p className="hint" style={{ fontSize: 12 }}>Đơn giá tham khảo thị trường, sẽ được chốt sau khi bóc khối lượng từ hồ sơ thiết kế.</p>
       </section>
 
+      {/* BẢNG LƯU Ý KỸ THUẬT VỚI 200+ MẸO THỰC CHIẾN CHẠY NGẪU NHIÊN THEO BƯỚC */}
       <section className="card">
-        <h2 className="card-h">Lưu ý kỹ thuật</h2>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <h2 className="card-h">Lưu ý kỹ thuật</h2>
+          <button
+            type="button"
+            className="link-btn"
+            style={{ fontSize: 12, padding: 0, minHeight: 0, color: 'var(--accent)' }}
+            onClick={rollNewTips}
+            title="Đổi lưu ý ngẫu nhiên khác cho bước này"
+          >
+            🔄 Đổi lưu ý
+          </button>
+        </div>
+
+        {/* 1. Các cảnh báo kỹ thuật tự động theo dữ liệu form */}
         {notes.map((t) => <Note key={t.t} bad={t.bad}>{t.t}</Note>)}
+
+        {/* 2. Các mẹo kỹ thuật xây nhà thực chiến ngẫu nhiên theo từng bước */}
+        {randomTips.length > 0 && (
+          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+              💡 Mẹo thi công Bước {currentStep + 1}:
+            </span>
+            {randomTips.map((tip) => (
+              <div
+                key={tip.id}
+                style={{
+                  padding: '10px 12px',
+                  borderRadius: 10,
+                  background: 'var(--accent-soft)',
+                  border: '1px solid var(--accent-soft-line)',
+                  fontSize: 12.5,
+                  lineHeight: 1.45,
+                  color: 'var(--ink)'
+                }}
+              >
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 }}>
+                  <strong style={{ fontSize: 12.5, color: '#123B31' }}>{tip.title}</strong>
+                  {tip.tag && (
+                    <span style={{ fontSize: 10, fontWeight: 600, color: 'var(--accent)', background: '#FFF', padding: '1px 6px', borderRadius: 4 }}>
+                      {tip.tag}
+                    </span>
+                  )}
+                </div>
+                <div>{tip.content}</div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* Nút mở thư viện cẩm nang đầy đủ 220 lưu ý kỹ thuật */}
+        <button
+          type="button"
+          className="btn ghost sm"
+          style={{ width: '100%', fontSize: 12, marginTop: 4, minHeight: 34 }}
+          onClick={() => setShowModal(true)}
+        >
+          📖 Xem cẩm nang 220 lưu ý kỹ thuật
+        </button>
+
+        <TipsLibraryModal isOpen={showModal} onClose={() => setShowModal(false)} currentStep={currentStep} />
       </section>
 
       <section className="card">
