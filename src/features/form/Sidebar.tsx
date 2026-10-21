@@ -122,65 +122,32 @@ export function Sidebar({ fs, couple, facing, est, notes, currentStep = 0 }: Pro
         <p className="hint" style={{ fontSize: 12 }}>Đơn giá tham khảo thị trường, sẽ được chốt sau khi bóc khối lượng từ hồ sơ thiết kế.</p>
       </section>
 
-      {/* BẢNG LƯU Ý KỸ THUẬT VỚI 200+ MẸO THỰC CHIẾN CHẠY NGẪU NHIÊN THEO BƯỚC */}
+      {/* BẢNG LƯU Ý KỸ THUẬT: 100% NGẪU NHIÊN THEO BƯỚC TỪ KHO 220 LƯU Ý */}
       <section className="card">
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
           <h2 className="card-h">Lưu ý kỹ thuật</h2>
           <button
             type="button"
             className="link-btn"
             style={{ fontSize: 12, padding: 0, minHeight: 0, color: 'var(--accent)' }}
             onClick={rollNewTips}
-            title="Đổi lưu ý ngẫu nhiên khác cho bước này"
+            title="Bấm để đổi 2 lưu ý ngẫu nhiên khác"
           >
-            🔄 Đổi lưu ý
+            🔄 Đổi ngẫu nhiên
           </button>
         </div>
 
-        {/* 1. Các cảnh báo nguy cơ thực sự (bad: true) hoặc lưu ý riêng khi đang ở Bước 5 kết cấu điện nước */}
-        {notes.filter((t) => t.bad || currentStep === 4).map((t) => (
+        {/* 1. Cảnh báo nguy cơ nứt lún thực sự theo điều kiện form (nếu có) */}
+        {notes.filter((t) => t.bad).map((t) => (
           <Note key={t.t} bad={t.bad}>{t.t}</Note>
         ))}
 
-        {/* 2. Các mẹo kỹ thuật xây nhà thực chiến ngẫu nhiên theo từng bước */}
-        {randomTips.length > 0 && (
-          <div style={{ marginTop: 6, display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <span style={{ fontSize: 11.5, fontWeight: 700, color: 'var(--muted)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
-              💡 Mẹo thi công Bước {currentStep + 1}:
-            </span>
-            {randomTips.map((tip) => (
-              <div
-                key={tip.id}
-                style={{
-                  padding: '10px 12px',
-                  borderRadius: 10,
-                  background: tip.tag === 'Quan trọng' ? '#FDF8F5' : 'var(--accent-soft)',
-                  border: tip.tag === 'Quan trọng' ? '1px solid #E8B99D' : '1px solid var(--accent-soft-line)',
-                  fontSize: 12.5,
-                  lineHeight: 1.45,
-                  color: 'var(--ink)'
-                }}
-              >
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 2 }}>
-                  <strong style={{ fontSize: 12.5, color: tip.tag === 'Quan trọng' ? '#8A3F0C' : '#123B31' }}>{tip.title}</strong>
-                  {tip.tag && (
-                    <span style={{
-                      fontSize: 10,
-                      fontWeight: 600,
-                      color: tip.tag === 'Quan trọng' ? '#8A3F0C' : 'var(--accent)',
-                      background: '#FFF',
-                      padding: '1px 6px',
-                      borderRadius: 4
-                    }}>
-                      {tip.tag}
-                    </span>
-                  )}
-                </div>
-                <div>{tip.content}</div>
-              </div>
-            ))}
-          </div>
-        )}
+        {/* 2. Các thẻ lưu ý kỹ thuật CHẠY NGẪU NHIÊN (dùng thẻ Note màu xanh chuẩn như ảnh mẫu) */}
+        {randomTips.map((tip) => (
+          <Note key={tip.id} bad={tip.tag === 'Quan trọng'}>
+            <strong>{tip.title}:</strong> {tip.content}
+          </Note>
+        ))}
 
         {/* Nút mở thư viện cẩm nang đầy đủ 220 lưu ý kỹ thuật */}
         <button
